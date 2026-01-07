@@ -10,6 +10,7 @@
 #include <atomic>
 #include <cstring>
 #include <sstream>
+#include <optional>
 
 #ifdef _WIN32
 #include <winsock2.h>
@@ -29,6 +30,8 @@ struct TracePointInfo {
     const char* file;
     int line;
     const char* function;
+    const char* level;      // "trace", "debug", "info", "warn", "func-entry", "func-exit"
+    const char* message;    // format string
 };
 
 // Singleton manager for all trace points
@@ -44,9 +47,10 @@ public:
     }
 
     // Register a trace point - stores pointer to the caller's static bool
-    void register_trace_point(bool* enabled, const char* file, int line, const char* function) {
+    void register_trace_point(bool* enabled, const char* file, int line, const char* function,
+                              const char* level, const char* message) {
         std::lock_guard<std::mutex> lock(mutex_);
-        trace_points_.push_back(TracePointInfo{enabled, file, line, function});
+        trace_points_.push_back(TracePointInfo{enabled, file, line, function, level, message});
         
         // Start control thread on first registration
         if (!control_thread_started_) {
@@ -55,13 +59,16 @@ public:
         }
     }
 
-    // Enable/disable a specific trace point
-    bool set_enabled(const char* file, int line, const char* function, bool state) {
+    // Enable/disable a specific trace point (full key match)
+    bool set_enabled(const char* file, int line, const char* function,
+                     const char* level, const char* message, bool state) {
         std::lock_guard<std::mutex> lock(mutex_);
         for (auto& info : trace_points_) {
             if (info.line == line &&
                 std::string_view(info.file) == std::string_view(file) &&
-                std::string_view(info.function) == std::string_view(function)) {
+                std::string_view(info.function) == std::string_view(function) &&
+                std::string_view(info.level) == std::string_view(level) &&
+                std::string_view(info.message) == std::string_view(message)) {
                 *info.enabled = state;
                 return true;
             }
@@ -77,6 +84,17 @@ public:
             return true;
         }
         return false;
+    }
+
+    // Enable/disable all trace points with a specific level
+    void set_level_enabled(const char* level, bool state) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        std::string_view level_view(level);
+        for (auto& info : trace_points_) {
+            if (std::string_view(info.level) == level_view) {
+                *info.enabled = state;
+            }
+        }
     }
 
     // Enable/disable all trace points in a file
@@ -125,8 +143,9 @@ public:
         size_t idx = 0;
         for (const auto& info : trace_points_) {
             oss << idx++ << " " << (*info.enabled ? "[ON] " : "[OFF]") 
-                << " " << info.file << ":" << info.line 
-                << " (" << info.function << ")\n";
+                << " [" << info.level << "] "
+                << info.file << ":" << info.line 
+                << " (" << info.function << ") \"" << info.message << "\"\n";
         }
         return oss.str();
     }
@@ -260,15 +279,33 @@ private:
                    "  list (l)           - List all trace points\n"
                    "  enable all (ea)    - Enable all trace points\n"
                    "  disable all (da)   - Disable all trace points\n"
-                   "  enable <specs>     - Enable trace points (file:line:func ...)\n"
-                   "  disable <specs>    - Disable trace points (file:line:func ...)\n"
+                   "  enable <specs>     - Enable trace points (file:line:func:level:msg ...)\n"
+                   "  disable <specs>    - Disable trace points (file:line:func:level:msg ...)\n"
                    "  help (h, ?)        - Show this help\n";
         }
         
         return "ERROR: Unknown command. Type 'help' for usage.\n";
     }
 
-    // Process batch enable/disable: "enable file:line:func file:line:func ..."
+    // URL-decode a string (for message field which may contain encoded chars)
+    static std::string url_decode(const std::string& str) {
+        std::string result;
+        for (size_t i = 0; i < str.size(); ++i) {
+            if (str[i] == '%' && i + 2 < str.size()) {
+                int val = 0;
+                std::istringstream iss(str.substr(i + 1, 2));
+                if (iss >> std::hex >> val) {
+                    result += static_cast<char>(val);
+                    i += 2;
+                    continue;
+                }
+            }
+            result += str[i];
+        }
+        return result;
+    }
+
+    // Process batch enable/disable: "enable file:line:func:level:msg file:line:func:level:msg ..."
     std::string process_batch_command(const std::string& command, bool enable) {
         std::istringstream iss(command);
         std::string verb;
@@ -277,22 +314,33 @@ private:
         int count = 0;
         std::string spec;
         while (iss >> spec) {
-            // Parse file:line:function
-            size_t pos1 = spec.rfind(':');
-            if (pos1 == std::string::npos) continue;
-            std::string function = spec.substr(pos1 + 1);
+            // Parse file:line:function:level:message (message is URL-encoded)
+            // Find last 4 colons from right
+            size_t pos_msg = spec.rfind(':');
+            if (pos_msg == std::string::npos) continue;
+            std::string message = url_decode(spec.substr(pos_msg + 1));
             
-            std::string rest = spec.substr(0, pos1);
-            size_t pos2 = rest.rfind(':');
-            if (pos2 == std::string::npos) continue;
+            std::string rest = spec.substr(0, pos_msg);
+            size_t pos_level = rest.rfind(':');
+            if (pos_level == std::string::npos) continue;
+            std::string level = rest.substr(pos_level + 1);
             
-            std::string file = rest.substr(0, pos2);
+            rest = rest.substr(0, pos_level);
+            size_t pos_func = rest.rfind(':');
+            if (pos_func == std::string::npos) continue;
+            std::string function = rest.substr(pos_func + 1);
+            
+            rest = rest.substr(0, pos_func);
+            size_t pos_line = rest.rfind(':');
+            if (pos_line == std::string::npos) continue;
+            
+            std::string file = rest.substr(0, pos_line);
             int line = 0;
             try {
-                line = std::stoi(rest.substr(pos2 + 1));
+                line = std::stoi(rest.substr(pos_line + 1));
             } catch (...) { continue; }
             
-            if (set_enabled(file.c_str(), line, function.c_str(), enable)) {
+            if (set_enabled(file.c_str(), line, function.c_str(), level.c_str(), message.c_str(), enable)) {
                 ++count;
             }
         }
@@ -313,79 +361,98 @@ private:
 
 namespace detail {
     // Helper to register and return initial value
-    inline bool register_trace_point(bool* enabled, const char* file, int line, const char* function) {
-        TraceManager::instance().register_trace_point(enabled, file, line, function);
+    inline bool register_trace_point(bool* enabled, const char* file, int line, const char* function,
+                                     const char* level, const char* message) {
+        TraceManager::instance().register_trace_point(enabled, file, line, function, level, message);
         return false;  // default: disabled
     }
     
-    inline bool register_trace_point_enabled(bool* enabled, const char* file, int line, const char* function) {
-        TraceManager::instance().register_trace_point(enabled, file, line, function);
+    inline bool register_trace_point_enabled(bool* enabled, const char* file, int line, const char* function,
+                                             const char* level, const char* message) {
+        TraceManager::instance().register_trace_point(enabled, file, line, function, level, message);
         return true;  // enabled by default
     }
 }
 
-// Default output handler
-inline void default_trace_handler(const char* file, int line, const char* function, const char* msg) {
-    std::fprintf(stderr, "[TRACE] %s:%d (%s): %s\n", file, line, function, msg);
+// Default output handler (now includes level)
+inline void default_trace_handler(const char* level, const char* file, int line, const char* function, const char* msg) {
+    std::fprintf(stderr, "[%s] %s:%d (%s): %s\n", level, file, line, function, msg);
 }
 
 // Configurable trace output
-inline std::function<void(const char*, int, const char*, const char*)>& trace_handler() {
-    static std::function<void(const char*, int, const char*, const char*)> handler = default_trace_handler;
+inline std::function<void(const char*, const char*, int, const char*, const char*)>& trace_handler() {
+    static std::function<void(const char*, const char*, int, const char*, const char*)> handler = default_trace_handler;
     return handler;
 }
 
-inline void set_trace_handler(std::function<void(const char*, int, const char*, const char*)> handler) {
+inline void set_trace_handler(std::function<void(const char*, const char*, int, const char*, const char*)> handler) {
     trace_handler() = std::move(handler);
 }
 
 namespace detail {
     template<typename... Args>
-    void trace_impl(const char* file, int line, const char* function, const char* fmt, Args&&... args) {
+    void trace_impl(const char* level, const char* file, int line, const char* function, const char* fmt, Args&&... args) {
         char buffer[1024];
         if constexpr (sizeof...(args) == 0) {
             std::snprintf(buffer, sizeof(buffer), "%s", fmt);
         } else {
             std::snprintf(buffer, sizeof(buffer), fmt, std::forward<Args>(args)...);
         }
-        trace_handler()(file, line, function, buffer);
+        trace_handler()(level, file, line, function, buffer);
     }
 }
 
+// RAII scope tracer for function entry/exit
+class ScopeTracer {
+public:
+    ScopeTracer(bool* exit_enabled, const char* file, int line, const char* function)
+        : exit_enabled_(exit_enabled), file_(file), line_(line), function_(function) {
+        trace_handler()("func-entry", file_, line_, function_, "");
+    }
+    
+    ~ScopeTracer() {
+        if (*exit_enabled_) {
+            trace_handler()("func-exit", file_, line_, function_, "");
+        }
+    }
+    
+private:
+    bool* exit_enabled_;
+    const char* file_;
+    int line_;
+    const char* function_;
+};
+
 } // namespace ytrace
 
-// Main trace macro - static bool registered with manager
-#define YTRACE(fmt, ...) \
+// Base log macro with level
+#define ylog(lvl, fmt, ...) \
     do { \
-        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__); \
+        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, lvl, fmt); \
         if (_ytrace_enabled_) { \
-            ytrace::detail::trace_impl(__FILE__, __LINE__, __func__, fmt __VA_OPT__(,) __VA_ARGS__); \
+            ytrace::detail::trace_impl(lvl, __FILE__, __LINE__, __func__, fmt __VA_OPT__(,) __VA_ARGS__); \
         } \
     } while(0)
 
-// Trace macro with initial enabled state
-#define YTRACE_ENABLED(fmt, ...) \
-    do { \
-        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point_enabled(&_ytrace_enabled_, __FILE__, __LINE__, __func__); \
-        if (_ytrace_enabled_) { \
-            ytrace::detail::trace_impl(__FILE__, __LINE__, __func__, fmt __VA_OPT__(,) __VA_ARGS__); \
-        } \
-    } while(0)
+// Level-specific macros
+#define ytrace(fmt, ...) ylog("trace", fmt __VA_OPT__(,) __VA_ARGS__)
+#define ydebug(fmt, ...) ylog("debug", fmt __VA_OPT__(,) __VA_ARGS__)
+#define yinfo(fmt, ...)  ylog("info", fmt __VA_OPT__(,) __VA_ARGS__)
+#define ywarn(fmt, ...)  ylog("warn", fmt __VA_OPT__(,) __VA_ARGS__)
 
-// Just register a trace point without tracing (useful for conditional blocks)
-#define YTRACE_POINT() \
-    static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__)
-
-#define YTRACE_POINT_ENABLED() \
-    static bool _ytrace_enabled_ = ytrace::detail::register_trace_point_enabled(&_ytrace_enabled_, __FILE__, __LINE__, __func__)
-
-// Check if trace point is enabled (must be after YTRACE_POINT)
-#define YTRACE_IS_ENABLED() (_ytrace_enabled_)
+// Function entry/exit tracer (RAII)
+#define yfunc() \
+    static bool _ytrace_entry_enabled_ = ytrace::detail::register_trace_point(&_ytrace_entry_enabled_, __FILE__, __LINE__, __func__, "func-entry", ""); \
+    static bool _ytrace_exit_enabled_ = ytrace::detail::register_trace_point(&_ytrace_exit_enabled_, __FILE__, __LINE__, __func__, "func-exit", ""); \
+    std::optional<ytrace::ScopeTracer> _ytrace_scope_guard_; \
+    if (_ytrace_entry_enabled_) _ytrace_scope_guard_.emplace(&_ytrace_exit_enabled_, __FILE__, __LINE__, __func__)
 
 // Convenience macros for manager access
-#define YTRACE_ENABLE_ALL() ytrace::TraceManager::instance().set_all_enabled(true)
-#define YTRACE_DISABLE_ALL() ytrace::TraceManager::instance().set_all_enabled(false)
-#define YTRACE_ENABLE_FILE(file) ytrace::TraceManager::instance().set_file_enabled(file, true)
-#define YTRACE_DISABLE_FILE(file) ytrace::TraceManager::instance().set_file_enabled(file, false)
-#define YTRACE_ENABLE_FUNCTION(func) ytrace::TraceManager::instance().set_function_enabled(func, true)
-#define YTRACE_DISABLE_FUNCTION(func) ytrace::TraceManager::instance().set_function_enabled(func, false)
+#define yenable_all()          ytrace::TraceManager::instance().set_all_enabled(true)
+#define ydisable_all()         ytrace::TraceManager::instance().set_all_enabled(false)
+#define yenable_file(file)     ytrace::TraceManager::instance().set_file_enabled(file, true)
+#define ydisable_file(file)    ytrace::TraceManager::instance().set_file_enabled(file, false)
+#define yenable_func(func)     ytrace::TraceManager::instance().set_function_enabled(func, true)
+#define ydisable_func(func)    ytrace::TraceManager::instance().set_function_enabled(func, false)
+#define yenable_level(lvl)     ytrace::TraceManager::instance().set_level_enabled(lvl, true)
+#define ydisable_level(lvl)    ytrace::TraceManager::instance().set_level_enabled(lvl, false)

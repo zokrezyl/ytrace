@@ -15,6 +15,8 @@ struct TracePoint {
     std::string file;
     int line;
     std::string function;
+    std::string level;
+    std::string message;
     bool enabled;
 };
 
@@ -125,39 +127,44 @@ std::string send_command(const std::string& socket_path, const std::string& comm
 }
 
 // Parse list response into TracePoint structs
-// Format: "0 [ON]  /path/file.cpp:123 (function_name)"
+// Format: "0 [ON]  [level] /path/file.cpp:123 (function_name) "message""
 std::vector<TracePoint> parse_trace_points(const std::string& response) {
     std::vector<TracePoint> points;
     std::istringstream iss(response);
     std::string line;
     
-    // Regex to parse: "0 [ON]  /path/file.cpp:123 (function_name)"
-    std::regex line_re(R"(^\d+\s+\[(ON|OFF)\]\s+(.+):(\d+)\s+\(([^)]+)\))");
+    // Regex to parse: "0 [ON]  [level] /path/file.cpp:123 (function_name) "message""
+    std::regex line_re(R"regex(^\d+\s+\[(ON|OFF)\]\s+\[([^\]]+)\]\s+(.+):(\d+)\s+\(([^)]+)\)\s+"([^"]*)")regex");
     
     while (std::getline(iss, line)) {
         std::smatch match;
         if (std::regex_search(line, match, line_re)) {
             TracePoint tp;
             tp.enabled = (match[1] == "ON");
-            tp.file = match[2];
-            tp.line = std::stoi(match[3]);
-            tp.function = match[4];
+            tp.level = match[2];
+            tp.file = match[3];
+            tp.line = std::stoi(match[4]);
+            tp.function = match[5];
+            tp.message = match[6];
             points.push_back(tp);
         }
     }
     return points;
 }
 
-// Filter trace points based on --all, --file, --function, --line flags
+// Filter trace points based on --all, --file, --function, --line, --level, --message flags
 std::vector<TracePoint> filter_trace_points(
     const std::vector<TracePoint>& points,
     bool all_flag,
     const std::vector<std::string>& file_patterns,
     const std::vector<std::string>& function_patterns,
-    const std::vector<int>& lines)
+    const std::vector<int>& lines,
+    const std::vector<std::string>& level_patterns,
+    const std::vector<std::string>& message_patterns)
 {
     // No filter specified = no matches (safe default)
-    if (!all_flag && file_patterns.empty() && function_patterns.empty() && lines.empty()) {
+    if (!all_flag && file_patterns.empty() && function_patterns.empty() && 
+        lines.empty() && level_patterns.empty() && message_patterns.empty()) {
         return {};
     }
     
@@ -184,6 +191,24 @@ std::vector<TracePoint> filter_trace_points(
             func_regexes.emplace_back(pat);
         } catch (const std::regex_error&) {
             std::cerr << "Warning: Invalid regex for --function: " << pat << "\n";
+        }
+    }
+    
+    std::vector<std::regex> level_regexes;
+    for (const auto& pat : level_patterns) {
+        try {
+            level_regexes.emplace_back(pat);
+        } catch (const std::regex_error&) {
+            std::cerr << "Warning: Invalid regex for --level: " << pat << "\n";
+        }
+    }
+    
+    std::vector<std::regex> msg_regexes;
+    for (const auto& pat : message_patterns) {
+        try {
+            msg_regexes.emplace_back(pat);
+        } catch (const std::regex_error&) {
+            std::cerr << "Warning: Invalid regex for --message: " << pat << "\n";
         }
     }
     
@@ -218,6 +243,26 @@ std::vector<TracePoint> filter_trace_points(
             }
         }
         
+        // Check level patterns (OR)
+        if (!match) {
+            for (const auto& re : level_regexes) {
+                if (std::regex_search(tp.level, re)) {
+                    match = true;
+                    break;
+                }
+            }
+        }
+        
+        // Check message patterns (OR)
+        if (!match) {
+            for (const auto& re : msg_regexes) {
+                if (std::regex_search(tp.message, re)) {
+                    match = true;
+                    break;
+                }
+            }
+        }
+        
         if (match) {
             result.push_back(tp);
         }
@@ -239,6 +284,8 @@ int main(int argc, char* argv[]) {
     args::ValueFlagList<std::string> file_flag(parser, "PATTERN", "Filter by file (regex)", {'f', "file"}, {}, args::Options::Global);
     args::ValueFlagList<std::string> func_flag(parser, "PATTERN", "Filter by function (regex)", {'F', "function"}, {}, args::Options::Global);
     args::ValueFlagList<int> line_flag(parser, "LINE", "Filter by line number", {'l', "line"}, {}, args::Options::Global);
+    args::ValueFlagList<std::string> level_flag(parser, "LEVEL", "Filter by level (regex)", {'L', "level"}, {}, args::Options::Global);
+    args::ValueFlagList<std::string> msg_flag(parser, "PATTERN", "Filter by message (regex)", {'m', "message"}, {}, args::Options::Global);
     
     args::Group commands(parser, "Commands:");
     args::Command list_cmd(commands, "list", "List trace points (with optional filters)");
@@ -320,6 +367,8 @@ int main(int argc, char* argv[]) {
     std::vector<std::string> file_patterns = args::get(file_flag);
     std::vector<std::string> func_patterns = args::get(func_flag);
     std::vector<int> line_nums = args::get(line_flag);
+    std::vector<std::string> level_patterns = args::get(level_flag);
+    std::vector<std::string> msg_patterns = args::get(msg_flag);
 
     // List command - fetch and optionally filter
     if (list_cmd) {
@@ -330,18 +379,20 @@ int main(int argc, char* argv[]) {
         }
         
         // If no filters, show all
-        if (!use_all && file_patterns.empty() && func_patterns.empty() && line_nums.empty()) {
+        if (!use_all && file_patterns.empty() && func_patterns.empty() && 
+            line_nums.empty() && level_patterns.empty() && msg_patterns.empty()) {
             std::cout << response;
             return 0;
         }
         
         // Apply filters
         auto points = parse_trace_points(response);
-        auto filtered = filter_trace_points(points, use_all, file_patterns, func_patterns, line_nums);
+        auto filtered = filter_trace_points(points, use_all, file_patterns, func_patterns, 
+                                            line_nums, level_patterns, msg_patterns);
         
         for (const auto& tp : filtered) {
-            std::cout << (tp.enabled ? "[ON] " : "[OFF]") << " " 
-                      << tp.file << ":" << tp.line << " (" << tp.function << ")\n";
+            std::cout << (tp.enabled ? "[ON] " : "[OFF]") << " [" << tp.level << "] "
+                      << tp.file << ":" << tp.line << " (" << tp.function << ") \"" << tp.message << "\"\n";
         }
         return 0;
     }
@@ -349,8 +400,9 @@ int main(int argc, char* argv[]) {
     // Enable/Disable commands - fetch list, filter, send batch
     if (enable_cmd || disable_cmd) {
         // Must have at least one filter
-        if (!use_all && file_patterns.empty() && func_patterns.empty() && line_nums.empty()) {
-            std::cerr << "Error: No filter specified. Use --all, --file, --function, or --line.\n";
+        if (!use_all && file_patterns.empty() && func_patterns.empty() && 
+            line_nums.empty() && level_patterns.empty() && msg_patterns.empty()) {
+            std::cerr << "Error: No filter specified. Use --all, --file, --function, --line, --level, or --message.\n";
             return 1;
         }
         
@@ -362,17 +414,32 @@ int main(int argc, char* argv[]) {
         }
         
         auto points = parse_trace_points(response);
-        auto filtered = filter_trace_points(points, use_all, file_patterns, func_patterns, line_nums);
+        auto filtered = filter_trace_points(points, use_all, file_patterns, func_patterns, 
+                                            line_nums, level_patterns, msg_patterns);
         
         if (filtered.empty()) {
             std::cout << "No trace points matched the filter.\n";
             return 0;
         }
         
-        // Build batch command: "enable file:line:function file:line:function ..."
+        // Build batch command: "enable file:line:function:level:message ..."
+        // URL-encode message to handle spaces and special chars
+        auto url_encode = [](const std::string& str) {
+            std::ostringstream oss;
+            for (char c : str) {
+                if (std::isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+                    oss << c;
+                } else {
+                    oss << '%' << std::uppercase << std::hex << ((int)(unsigned char)c);
+                }
+            }
+            return oss.str();
+        };
+        
         std::string cmd = enable_cmd ? "enable" : "disable";
         for (const auto& tp : filtered) {
-            cmd += " " + tp.file + ":" + std::to_string(tp.line) + ":" + tp.function;
+            cmd += " " + tp.file + ":" + std::to_string(tp.line) + ":" + tp.function 
+                 + ":" + tp.level + ":" + url_encode(tp.message);
         }
         
         response = send_command(socket_path, cmd);

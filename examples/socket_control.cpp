@@ -4,7 +4,10 @@
 #include <thread>
 #include <ytrace/ytrace.hpp>
 
-void worker() { YTRACE("worker tick"); }
+void worker() { 
+    yfunc();
+    ytrace("worker tick"); 
+}
 
 int main() {
   std::cout << "Running... Use socket to control trace points.\n";

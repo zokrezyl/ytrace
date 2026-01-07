@@ -3,17 +3,19 @@
 #include <iostream>
 
 void process_data(int value) {
-    YTRACE("processing value: %d", value);
+    yfunc();
+    ytrace("processing value: %d", value);
     
     if (value > 10) {
-        YTRACE("value exceeds threshold");
+        ydebug("value exceeds threshold");
     }
 }
 
 void initialize() {
-    YTRACE_ENABLED("initialization started");  // enabled by default
-    YTRACE("loading config");
-    YTRACE("config loaded successfully");
+    yfunc();
+    yinfo("initialization started");
+    ytrace("loading config");
+    ytrace("config loaded successfully");
 }
 
 int main() {
@@ -25,20 +27,20 @@ int main() {
     process_data(15);
 
     std::cout << "\n2. Enabling all trace points:\n";
-    YTRACE_ENABLE_ALL();
+    yenable_all();
     initialize();
     process_data(5);
     process_data(15);
 
     std::cout << "\n3. Disabling only process_data traces:\n";
-    YTRACE_DISABLE_FUNCTION("process_data");
+    ydisable_func("process_data");
     initialize();
     process_data(20);
 
     std::cout << "\n4. Listing all registered trace points:\n";
     ytrace::TraceManager::instance().for_each([](const ytrace::TracePointInfo& info) {
-        std::printf("  %s:%d [%s] -> %s\n", 
-            info.file, info.line, info.function,
+        std::printf("  %s:%d [%s] [%s] -> %s\n", 
+            info.file, info.line, info.level, info.function,
             *info.enabled ? "ENABLED" : "disabled");
     });
 

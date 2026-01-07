@@ -2,12 +2,13 @@
 // Use this to test filtering capabilities of ytrace-ctl
 //
 // Example filtering commands:
-//   ytrace-ctl list                     # List all trace points
-//   ytrace-ctl enable all               # Enable all traces
-//   ytrace-ctl disable all              # Disable all traces
-//   ytrace-ctl enable compute_factorial # Enable traces in specific function
-//   ytrace-ctl disable sort_data        # Disable traces in specific function
-//   ytrace-ctl enable 5                 # Enable trace point by index
+//   ytrace-ctl list                        # List all trace points
+//   ytrace-ctl enable --all                # Enable all traces
+//   ytrace-ctl disable --all               # Disable all traces
+//   ytrace-ctl enable -F compute_factorial # Enable traces in specific function
+//   ytrace-ctl disable -f data_processor   # Disable traces in specific file
+//   ytrace-ctl enable -L func-entry        # Enable all function entry traces
+//   ytrace-ctl enable -L "info|warn"       # Enable info and warn levels
 
 #include <ytrace/ytrace.hpp>
 #include <iostream>
@@ -20,18 +21,20 @@
 #include "network_sim.hpp"
 
 void run_math_tests() {
-    YTRACE("starting math tests");
+    yfunc();
+    yinfo("starting math tests");
     
     math_ops::compute_factorial(5);
     math_ops::compute_fibonacci(10);
     math_ops::compute_prime_check(17);
     math_ops::compute_prime_check(18);
     
-    YTRACE("math tests complete");
+    yinfo("math tests complete");
 }
 
 void run_data_tests() {
-    YTRACE("starting data processing tests");
+    yfunc();
+    yinfo("starting data processing tests");
     
     std::vector<int> data = {64, 34, 25, 12, 22, 11, 90, 5, 77, 30};
     
@@ -40,15 +43,16 @@ void run_data_tests() {
     int sum = data_processor::aggregate_sum(evens);
     std::string str = data_processor::transform_to_string(evens);
     
-    YTRACE("data tests complete: sum=%d, result=%s", sum, str.c_str());
+    yinfo("data tests complete: sum=%d, result=%s", sum, str.c_str());
 }
 
 void run_network_tests() {
-    YTRACE("starting network simulation tests");
+    yfunc();
+    yinfo("starting network simulation tests");
     
     network_sim::simulate_full_session("api.example.com", 443);
     
-    YTRACE("network tests complete");
+    yinfo("network tests complete");
 }
 
 int main(int argc, char* argv[]) {
@@ -63,19 +67,19 @@ int main(int argc, char* argv[]) {
     if (loop_mode) {
         std::cout << "Running in loop mode. Press Ctrl+C to stop.\n";
         std::cout << "Try enabling/disabling traces while running:\n";
-        std::cout << "  ytrace-ctl enable all\n";
-        std::cout << "  ytrace-ctl disable data_processor.cpp\n";
-        std::cout << "  ytrace-ctl enable compute_fibonacci\n\n";
+        std::cout << "  ytrace-ctl enable --all\n";
+        std::cout << "  ytrace-ctl disable -f data_processor\n";
+        std::cout << "  ytrace-ctl enable -L func-entry\n\n";
     }
     
     do {
-        YTRACE_ENABLED("=== Starting test cycle ===");
+        yinfo("=== Starting test cycle ===");
         
         run_math_tests();
         run_data_tests();
         run_network_tests();
         
-        YTRACE_ENABLED("=== Test cycle complete ===");
+        yinfo("=== Test cycle complete ===");
         
         if (loop_mode) {
             std::cout << "--- Cycle complete, waiting 2 seconds ---\n";
@@ -86,8 +90,8 @@ int main(int argc, char* argv[]) {
     // List all trace points at the end
     std::cout << "\n=== Registered Trace Points ===\n";
     ytrace::TraceManager::instance().for_each([](const ytrace::TracePointInfo& info) {
-        std::printf("  %s:%d [%s] -> %s\n", 
-            info.file, info.line, info.function,
+        std::printf("  %s:%d [%s] [%s] \"%s\" -> %s\n", 
+            info.file, info.line, info.level, info.function, info.message,
             *info.enabled ? "ENABLED" : "disabled");
     });
     
