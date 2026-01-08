@@ -117,19 +117,33 @@ ytrace-ctl disable --file "network" --function "debug_.*"  # Combined filters
 ### Using CMake (Recommended for CPM)
 
 ```bash
-# Configure and build
+# Configure and build with defaults
 mkdir build && cd build
-cmake .. -DYTRACE_FORMAT=snprintf
+cmake ..
 cmake --build .
 
-# With examples and tools
-cmake .. -DYTRACE_BUILD_EXAMPLES=ON -DYTRACE_BUILD_TOOLS=ON
-cmake --build .
+# Disable specific macros at compile-time
+cmake .. -DYTRACE_ENABLE_YFUNC=OFF      # Disable yfunc macro
+cmake .. -DYTRACE_ENABLE_YDEBUG=OFF     # Disable ydebug macro
+cmake .. -DYTRACE_ENABLE_YINFO=OFF      # Disable yinfo macro
 
-# With fmtlib or spdlog backend
+# With different formatting backend
 cmake .. -DYTRACE_FORMAT=fmtlib
 cmake .. -DYTRACE_FORMAT=spdlog
+
+# Disable examples/tools
+cmake .. -DYTRACE_BUILD_EXAMPLES=OFF -DYTRACE_BUILD_TOOLS=OFF
 ```
+
+**Compile-time macro switches** (all default to ON):
+- `YTRACE_ENABLE_YLOG` - Enable ylog macro
+- `YTRACE_ENABLE_YTRACE` - Enable ytrace macro
+- `YTRACE_ENABLE_YDEBUG` - Enable ydebug macro
+- `YTRACE_ENABLE_YINFO` - Enable yinfo macro
+- `YTRACE_ENABLE_YWARN` - Enable ywarn macro
+- `YTRACE_ENABLE_YFUNC` - Enable yfunc macro
+
+When disabled, macros compile to empty `do {} while(0)` with zero overhead.
 
 ### Using CPM (C++ Package Manager)
 
@@ -142,6 +156,16 @@ CPMAddPackage("gh:user/ytrace@main")
 
 add_executable(myapp main.cpp)
 target_link_libraries(myapp PRIVATE ytrace::ytrace)
+```
+
+Override options in CPM:
+```cmake
+CPMAddPackage(
+    NAME ytrace
+    GIT_REPOSITORY "https://github.com/user/ytrace.git"
+    GIT_TAG main
+    OPTIONS "YTRACE_ENABLE_YFUNC OFF" "YTRACE_FORMAT fmtlib"
+)
 ```
 
 ### Using Make (Legacy)

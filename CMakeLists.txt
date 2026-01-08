@@ -18,6 +18,51 @@ target_include_directories(ytrace INTERFACE
     $<INSTALL_INTERFACE:include>
 )
 
+# Compile-time macro switches (default: all enabled)
+option(YTRACE_ENABLE_YLOG "Enable ylog macro" ON)
+option(YTRACE_ENABLE_YTRACE "Enable ytrace macro" ON)
+option(YTRACE_ENABLE_YDEBUG "Enable ydebug macro" ON)
+option(YTRACE_ENABLE_YINFO "Enable yinfo macro" ON)
+option(YTRACE_ENABLE_YWARN "Enable ywarn macro" ON)
+option(YTRACE_ENABLE_YFUNC "Enable yfunc macro" ON)
+
+# Apply compile definitions
+if(YTRACE_ENABLE_YLOG)
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YLOG=1)
+else()
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YLOG=0)
+endif()
+
+if(YTRACE_ENABLE_YTRACE)
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YTRACE=1)
+else()
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YTRACE=0)
+endif()
+
+if(YTRACE_ENABLE_YDEBUG)
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YDEBUG=1)
+else()
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YDEBUG=0)
+endif()
+
+if(YTRACE_ENABLE_YINFO)
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YINFO=1)
+else()
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YINFO=0)
+endif()
+
+if(YTRACE_ENABLE_YWARN)
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YWARN=1)
+else()
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YWARN=0)
+endif()
+
+if(YTRACE_ENABLE_YFUNC)
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YFUNC=1)
+else()
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YFUNC=0)
+endif()
+
 # Formatting backend option
 set(YTRACE_FORMAT "snprintf" CACHE STRING "Formatting backend: snprintf, fmtlib, or spdlog")
 set_property(CACHE YTRACE_FORMAT PROPERTY STRINGS "snprintf" "fmtlib" "spdlog")
@@ -40,7 +85,7 @@ message(STATUS "ytrace: Using ${YTRACE_FORMAT} formatting backend")
 
 # Optional: Build examples and tools
 option(YTRACE_BUILD_EXAMPLES "Build ytrace examples" OFF)
-option(YTRACE_BUILD_TOOLS "Build ytrace-ctl tool" OFF)
+option(YTRACE_BUILD_TOOLS "Build ytrace-ctl tool" ON)
 
 if(YTRACE_BUILD_EXAMPLES)
     add_subdirectory(examples)

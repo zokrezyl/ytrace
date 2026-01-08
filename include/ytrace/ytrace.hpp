@@ -457,7 +457,33 @@ private:
 
 } // namespace ytrace
 
+// Compile-time switches for each macro (default: enabled)
+#ifndef YTRACE_ENABLE_YLOG
+#define YTRACE_ENABLE_YLOG 1
+#endif
+
+#ifndef YTRACE_ENABLE_YTRACE
+#define YTRACE_ENABLE_YTRACE 1
+#endif
+
+#ifndef YTRACE_ENABLE_YDEBUG
+#define YTRACE_ENABLE_YDEBUG 1
+#endif
+
+#ifndef YTRACE_ENABLE_YINFO
+#define YTRACE_ENABLE_YINFO 1
+#endif
+
+#ifndef YTRACE_ENABLE_YWARN
+#define YTRACE_ENABLE_YWARN 1
+#endif
+
+#ifndef YTRACE_ENABLE_YFUNC
+#define YTRACE_ENABLE_YFUNC 1
+#endif
+
 // Base log macro with level
+#if YTRACE_ENABLE_YLOG
 #define ylog(lvl, fmt, ...) \
     do { \
         static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, lvl, fmt); \
@@ -465,19 +491,45 @@ private:
             ytrace::detail::trace_impl(lvl, __FILE__, __LINE__, __func__, fmt __VA_OPT__(,) __VA_ARGS__); \
         } \
     } while(0)
+#else
+#define ylog(lvl, fmt, ...) do {} while(0)
+#endif
 
 // Level-specific macros
+#if YTRACE_ENABLE_YTRACE
 #define ytrace(fmt, ...) ylog("trace", fmt __VA_OPT__(,) __VA_ARGS__)
+#else
+#define ytrace(fmt, ...) do {} while(0)
+#endif
+
+#if YTRACE_ENABLE_YDEBUG
 #define ydebug(fmt, ...) ylog("debug", fmt __VA_OPT__(,) __VA_ARGS__)
-#define yinfo(fmt, ...)  ylog("info", fmt __VA_OPT__(,) __VA_ARGS__)
-#define ywarn(fmt, ...)  ylog("warn", fmt __VA_OPT__(,) __VA_ARGS__)
+#else
+#define ydebug(fmt, ...) do {} while(0)
+#endif
+
+#if YTRACE_ENABLE_YINFO
+#define yinfo(fmt, ...) ylog("info", fmt __VA_OPT__(,) __VA_ARGS__)
+#else
+#define yinfo(fmt, ...) do {} while(0)
+#endif
+
+#if YTRACE_ENABLE_YWARN
+#define ywarn(fmt, ...) ylog("warn", fmt __VA_OPT__(,) __VA_ARGS__)
+#else
+#define ywarn(fmt, ...) do {} while(0)
+#endif
 
 // Function entry/exit tracer (RAII)
+#if YTRACE_ENABLE_YFUNC
 #define yfunc() \
     static bool _ytrace_entry_enabled_ = ytrace::detail::register_trace_point(&_ytrace_entry_enabled_, __FILE__, __LINE__, __func__, "func-entry", ""); \
     static bool _ytrace_exit_enabled_ = ytrace::detail::register_trace_point(&_ytrace_exit_enabled_, __FILE__, __LINE__, __func__, "func-exit", ""); \
     std::optional<ytrace::ScopeTracer> _ytrace_scope_guard_; \
     if (_ytrace_entry_enabled_) _ytrace_scope_guard_.emplace(&_ytrace_exit_enabled_, __FILE__, __LINE__, __func__)
+#else
+#define yfunc() do {} while(0)
+#endif
 
 // Convenience macros for manager access
 #define yenable_all()          ytrace::TraceManager::instance().set_all_enabled(true)
