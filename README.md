@@ -6,6 +6,8 @@ A header-only C++20 tracing library with runtime control via Unix sockets.
 
 ytrace provides lightweight, dynamically controllable trace points for C++ applications. Trace points are disabled by default and can be enabled/disabled at runtime without restarting the application—ideal for debugging production systems.
 
+**Zero-overhead tracing:** When disabled, trace points compile to a single boolean check with zero runtime cost. This means you can ship production binaries with comprehensive tracing built-in, enabling detailed diagnostics on-demand without performance penalty.
+
 ## Mechanism
 
 1. **Registration**: Each trace macro registers itself with a singleton `TraceManager` on first execution
@@ -112,10 +114,54 @@ ytrace-ctl disable --file "network" --function "debug_.*"  # Combined filters
 
 ## Building
 
+### Using CMake (Recommended for CPM)
+
 ```bash
-make           # Build examples and ytrace-ctl
-make clean     # Clean build artifacts
+# Configure and build
+mkdir build && cd build
+cmake .. -DYTRACE_FORMAT=snprintf
+cmake --build .
+
+# With examples and tools
+cmake .. -DYTRACE_BUILD_EXAMPLES=ON -DYTRACE_BUILD_TOOLS=ON
+cmake --build .
+
+# With fmtlib or spdlog backend
+cmake .. -DYTRACE_FORMAT=fmtlib
+cmake .. -DYTRACE_FORMAT=spdlog
 ```
+
+### Using CPM (C++ Package Manager)
+
+In your `CMakeLists.txt`:
+
+```cmake
+include(cmake/CPM.cmake)
+
+CPMAddPackage("gh:user/ytrace@main")
+
+add_executable(myapp main.cpp)
+target_link_libraries(myapp PRIVATE ytrace::ytrace)
+```
+
+### Using Make (Legacy)
+
+```bash
+make                           # Build with default snprintf
+make YTRACE_FORMAT=fmtlib      # Use fmtlib
+make YTRACE_FORMAT=spdlog      # Use spdlog
+make clean                     # Clean build artifacts
+```
+
+### Formatting Backends
+
+ytrace supports three formatting implementations, selectable at compile time:
+
+- **snprintf** (default) - C-style formatting, no external dependencies
+- **fmtlib** - Modern, safe formatting (requires `fmt` library)
+- **spdlog** - Async logging with fmt backend (requires `spdlog` library)
+
+Choose the backend that best fits your project's dependencies and performance needs.
 
 ## Requirements
 

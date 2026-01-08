@@ -1,6 +1,16 @@
 CXX := g++
 CXXFLAGS := -std=c++20 -Wall -Wextra -I include
 
+# Formatting backend selection (optional)
+# YTRACE_FORMAT can be: snprintf (default), fmtlib, or spdlog
+YTRACE_FORMAT ?= snprintf
+
+ifeq ($(YTRACE_FORMAT),fmtlib)
+    CXXFLAGS += -DYTRACE_USE_FMTLIB
+else ifeq ($(YTRACE_FORMAT),spdlog)
+    CXXFLAGS += -DYTRACE_USE_SPDLOG
+endif
+
 BUILD_DIR := build
 EXAMPLES_DIR := examples
 SRC_DIR := src

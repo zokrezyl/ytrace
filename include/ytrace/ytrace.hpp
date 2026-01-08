@@ -12,6 +12,17 @@
 #include <sstream>
 #include <optional>
 
+// Formatting backend selection (compile-time flag)
+// - YTRACE_USE_SPDLOG: Use spdlog's fmt backend (requires spdlog)
+// - YTRACE_USE_FMTLIB: Use fmtlib (requires fmt/format.h)
+// - default: snprintf (C-style, no external dependencies)
+
+#if defined(YTRACE_USE_SPDLOG)
+    #include <spdlog/fmt/fmt.h>
+#elif defined(YTRACE_USE_FMTLIB)
+    #include <fmt/format.h>
+#endif
+
 #ifdef _WIN32
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -392,13 +403,34 @@ inline void set_trace_handler(std::function<void(const char*, const char*, int, 
 namespace detail {
     template<typename... Args>
     void trace_impl(const char* level, const char* file, int line, const char* function, const char* fmt, Args&&... args) {
+        std::string formatted_msg;
+
+#if defined(YTRACE_USE_SPDLOG)
+        // Use spdlog's fmt backend
+        try {
+            formatted_msg = fmt::format(fmt, std::forward<Args>(args)...);
+        } catch (...) {
+            formatted_msg = fmt;
+        }
+#elif defined(YTRACE_USE_FMTLIB)
+        // Use fmtlib directly
+        try {
+            formatted_msg = fmt::format(fmt, std::forward<Args>(args)...);
+        } catch (...) {
+            formatted_msg = fmt;
+        }
+#else
+        // Fallback to snprintf (works with runtime format strings)
         char buffer[1024];
         if constexpr (sizeof...(args) == 0) {
             std::snprintf(buffer, sizeof(buffer), "%s", fmt);
         } else {
             std::snprintf(buffer, sizeof(buffer), fmt, std::forward<Args>(args)...);
         }
-        trace_handler()(level, file, line, function, buffer);
+        formatted_msg = buffer;
+#endif
+
+        trace_handler()(level, file, line, function, formatted_msg.c_str());
     }
 }
 
