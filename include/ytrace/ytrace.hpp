@@ -13,14 +13,12 @@
 #include <optional>
 
 // Formatting backend selection (compile-time flag)
-// - YTRACE_USE_SPDLOG: Use spdlog's fmt backend (requires spdlog)
-// - YTRACE_USE_FMTLIB: Use fmtlib (requires fmt/format.h)
+// - YTRACE_USE_SPDLOG: Use spdlog for logging (requires spdlog)
 // - default: snprintf (C-style, no external dependencies)
 
 #if defined(YTRACE_USE_SPDLOG)
-    #include <spdlog/fmt/fmt.h>
-#elif defined(YTRACE_USE_FMTLIB)
-    #include <fmt/format.h>
+    #include <spdlog/spdlog.h>
+    #include <spdlog/sinks/stdout_color_sinks.h>
 #endif
 
 #ifdef _WIN32
@@ -31,9 +29,56 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
+#include <fstream>
+#include <filesystem>
 #endif
 
 namespace ytrace {
+
+// Forward declaration
+struct TracePointInfo;
+
+// Config persistence utility
+class ConfigPersistence {
+public:
+    static std::string compute_path_hash(const std::string& path) {
+        // Simple hash: sum bytes and convert to base36-like (digits + lowercase)
+        unsigned long hash = 5381;
+        for (char c : path) {
+            hash = ((hash << 5) + hash) ^ (unsigned char)c;
+        }
+        
+        // Convert to base36 (0-9, a-z) - 20 chars
+        std::string result;
+        for (int i = 0; i < 20; ++i) {
+            int digit = hash % 36;
+            hash /= 36;
+            if (digit < 10)
+                result += char('0' + digit);
+            else
+                result += char('a' + digit - 10);
+        }
+        return result;
+    }
+    
+    static std::string get_config_file(const std::string& exec_name, const std::string& exec_path) {
+#ifndef _WIN32
+        const char* home = std::getenv("HOME");
+        if (!home) home = "/tmp";
+        
+        std::string cache_dir = std::string(home) + "/.cache/ytrace";
+        std::filesystem::create_directories(cache_dir);
+        
+        std::string path_hash = compute_path_hash(exec_path);
+        return cache_dir + "/" + exec_name + "-" + path_hash + ".config";
+#else
+        return "";  // Not supported on Windows
+#endif
+    }
+    
+    static void save_state(const std::string& config_file, const std::vector<TracePointInfo>& points);
+    static void load_state(const std::string& config_file, std::vector<TracePointInfo>& points);
+};
 
 // Info stored for each trace point
 struct TracePointInfo {
@@ -55,6 +100,7 @@ public:
 
     ~TraceManager() {
         stop_control_thread();
+        save_config();
     }
 
     // Register a trace point - stores pointer to the caller's static bool
@@ -66,6 +112,7 @@ public:
         // Start control thread on first registration
         if (!control_thread_started_) {
             control_thread_started_ = true;
+            load_config();  // Load saved state on first registration
             start_control_thread();
         }
     }
@@ -81,6 +128,7 @@ public:
                 std::string_view(info.level) == std::string_view(level) &&
                 std::string_view(info.message) == std::string_view(message)) {
                 *info.enabled = state;
+                save_config();
                 return true;
             }
         }
@@ -92,6 +140,7 @@ public:
         std::lock_guard<std::mutex> lock(mutex_);
         if (index < trace_points_.size()) {
             *trace_points_[index].enabled = state;
+            save_config();
             return true;
         }
         return false;
@@ -101,41 +150,55 @@ public:
     void set_level_enabled(const char* level, bool state) {
         std::lock_guard<std::mutex> lock(mutex_);
         std::string_view level_view(level);
+        bool changed = false;
         for (auto& info : trace_points_) {
             if (std::string_view(info.level) == level_view) {
                 *info.enabled = state;
+                changed = true;
             }
         }
+        if (changed) save_config();
     }
 
     // Enable/disable all trace points in a file
     void set_file_enabled(const char* file, bool state) {
         std::lock_guard<std::mutex> lock(mutex_);
         std::string_view file_view(file);
+        bool changed = false;
         for (auto& info : trace_points_) {
             if (std::string_view(info.file) == file_view) {
                 *info.enabled = state;
+                changed = true;
             }
         }
+        if (changed) save_config();
     }
 
     // Enable/disable all trace points in a function
     void set_function_enabled(const char* function, bool state) {
         std::lock_guard<std::mutex> lock(mutex_);
         std::string_view func_view(function);
+        bool changed = false;
         for (auto& info : trace_points_) {
             if (std::string_view(info.function) == func_view) {
                 *info.enabled = state;
+                changed = true;
             }
         }
+        if (changed) save_config();
     }
 
     // Enable/disable all trace points
     void set_all_enabled(bool state) {
         std::lock_guard<std::mutex> lock(mutex_);
+        bool changed = false;
         for (auto& info : trace_points_) {
-            *info.enabled = state;
+            if (*info.enabled != state) {
+                *info.enabled = state;
+                changed = true;
+            }
         }
+        if (changed) save_config();
     }
 
     // Iterate over all trace points
@@ -368,6 +431,33 @@ private:
     std::thread control_thread_;
     int server_fd_;
     std::string socket_path_;
+    std::string config_file_;
+    
+    void save_config() {
+#ifndef _WIN32
+        if (!config_file_.empty()) {
+            ConfigPersistence::save_state(config_file_, trace_points_);
+        }
+#endif
+    }
+    
+    void load_config() {
+#ifndef _WIN32
+        if (!config_file_.empty()) {
+            ConfigPersistence::load_state(config_file_, trace_points_);
+        }
+#endif
+    }
+    
+    void init_config(const std::string& exec_name, const std::string& exec_path) {
+        config_file_ = ConfigPersistence::get_config_file(exec_name, exec_path);
+    }
+    
+public:
+    // Call this early to enable config persistence
+    static void enable_config_persistence(const std::string& exec_name, const std::string& exec_path) {
+        instance().init_config(exec_name, exec_path);
+    }
 };
 
 namespace detail {
@@ -401,36 +491,26 @@ inline void set_trace_handler(std::function<void(const char*, const char*, int, 
 }
 
 namespace detail {
+#if defined(YTRACE_USE_SPDLOG)
+    inline spdlog::level::level_enum to_spdlog_level(const char* level) {
+        std::string_view lv(level);
+        if (lv == "trace") return spdlog::level::trace;
+        else if (lv == "debug" || lv == "func-entry" || lv == "func-exit") return spdlog::level::debug;
+        else if (lv == "info") return spdlog::level::info;
+        else if (lv == "warn") return spdlog::level::warn;
+        return spdlog::level::debug;
+    }
+#endif
+    
     template<typename... Args>
     void trace_impl(const char* level, const char* file, int line, const char* function, const char* fmt, Args&&... args) {
-        std::string formatted_msg;
-
-#if defined(YTRACE_USE_SPDLOG)
-        // Use spdlog's fmt backend
-        try {
-            formatted_msg = fmt::format(fmt, std::forward<Args>(args)...);
-        } catch (...) {
-            formatted_msg = fmt;
-        }
-#elif defined(YTRACE_USE_FMTLIB)
-        // Use fmtlib directly
-        try {
-            formatted_msg = fmt::format(fmt, std::forward<Args>(args)...);
-        } catch (...) {
-            formatted_msg = fmt;
-        }
-#else
-        // Fallback to snprintf (works with runtime format strings)
         char buffer[1024];
         if constexpr (sizeof...(args) == 0) {
             std::snprintf(buffer, sizeof(buffer), "%s", fmt);
         } else {
             std::snprintf(buffer, sizeof(buffer), fmt, std::forward<Args>(args)...);
         }
-        formatted_msg = buffer;
-#endif
-
-        trace_handler()(level, file, line, function, formatted_msg.c_str());
+        trace_handler()(level, file, line, function, buffer);
     }
 }
 
@@ -457,6 +537,68 @@ private:
 
 } // namespace ytrace
 
+// ConfigPersistence implementation (after TracePointInfo is defined)
+namespace ytrace {
+    inline void ConfigPersistence::save_state(const std::string& config_file, const std::vector<TracePointInfo>& points) {
+#ifndef _WIN32
+        std::ofstream file(config_file);
+        if (!file) return;
+        
+        for (const auto& info : points) {
+            bool enabled = *info.enabled;
+            file << (enabled ? "1" : "0") << " "
+                 << info.file << " "
+                 << info.line << " "
+                 << info.function << " "
+                 << info.level << " "
+                 << info.message << "\n";
+        }
+#endif
+    }
+    
+    inline void ConfigPersistence::load_state(const std::string& config_file, std::vector<TracePointInfo>& points) {
+#ifndef _WIN32
+        std::ifstream file(config_file);
+        if (!file) return;
+        
+        std::string line;
+        size_t idx = 0;
+        
+        while (std::getline(file, line) && idx < points.size()) {
+            if (line.empty()) continue;
+            
+            // Parse: "0/1 file line function level message"
+            std::istringstream iss(line);
+            int enabled_int = 0;
+            int line_num = 0;
+            std::string file_path, func, level, msg;
+            
+            if (iss >> enabled_int >> file_path >> line_num >> func >> level) {
+                // Read rest of line as message
+                std::string rest;
+                if (std::getline(iss, rest)) {
+                    msg = rest;
+                    // Trim leading space
+                    if (!msg.empty() && msg[0] == ' ') {
+                        msg = msg.substr(1);
+                    }
+                }
+                
+                // Verify this matches the expected trace point
+                if (file_path == points[idx].file &&
+                    line_num == points[idx].line &&
+                    func == points[idx].function &&
+                    level == points[idx].level &&
+                    msg == points[idx].message) {
+                    *points[idx].enabled = (enabled_int != 0);
+                }
+            }
+            idx++;
+        }
+#endif
+    }
+}
+
 // Compile-time switches for each macro (default: enabled)
 #ifndef YTRACE_ENABLE_YLOG
 #define YTRACE_ENABLE_YLOG 1
@@ -482,8 +624,17 @@ private:
 #define YTRACE_ENABLE_YFUNC 1
 #endif
 
-// Base log macro with level
+// Macros with compile-time format strings for spdlog
 #if YTRACE_ENABLE_YLOG
+#if defined(YTRACE_USE_SPDLOG)
+#define ylog(lvl, fmt, ...) \
+    do { \
+        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, lvl, fmt); \
+        if (_ytrace_enabled_) { \
+            spdlog::log(spdlog::source_loc{__FILE__, __LINE__, __func__}, ytrace::detail::to_spdlog_level(lvl), fmt __VA_OPT__(,) __VA_ARGS__); \
+        } \
+    } while(0)
+#else
 #define ylog(lvl, fmt, ...) \
     do { \
         static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, lvl, fmt); \
@@ -491,31 +642,72 @@ private:
             ytrace::detail::trace_impl(lvl, __FILE__, __LINE__, __func__, fmt __VA_OPT__(,) __VA_ARGS__); \
         } \
     } while(0)
+#endif
 #else
 #define ylog(lvl, fmt, ...) do {} while(0)
 #endif
 
-// Level-specific macros
+// Level-specific macros with compile-time format strings
 #if YTRACE_ENABLE_YTRACE
+#if defined(YTRACE_USE_SPDLOG)
+#define ytrace(fmt, ...) \
+    do { \
+        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, "trace", fmt); \
+        if (_ytrace_enabled_) { \
+            spdlog::log(spdlog::source_loc{__FILE__, __LINE__, __func__}, spdlog::level::trace, fmt __VA_OPT__(,) __VA_ARGS__); \
+        } \
+    } while(0)
+#else
 #define ytrace(fmt, ...) ylog("trace", fmt __VA_OPT__(,) __VA_ARGS__)
+#endif
 #else
 #define ytrace(fmt, ...) do {} while(0)
 #endif
 
 #if YTRACE_ENABLE_YDEBUG
+#if defined(YTRACE_USE_SPDLOG)
+#define ydebug(fmt, ...) \
+    do { \
+        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, "debug", fmt); \
+        if (_ytrace_enabled_) { \
+            spdlog::log(spdlog::source_loc{__FILE__, __LINE__, __func__}, spdlog::level::debug, fmt __VA_OPT__(,) __VA_ARGS__); \
+        } \
+    } while(0)
+#else
 #define ydebug(fmt, ...) ylog("debug", fmt __VA_OPT__(,) __VA_ARGS__)
+#endif
 #else
 #define ydebug(fmt, ...) do {} while(0)
 #endif
 
 #if YTRACE_ENABLE_YINFO
+#if defined(YTRACE_USE_SPDLOG)
+#define yinfo(fmt, ...) \
+    do { \
+        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, "info", fmt); \
+        if (_ytrace_enabled_) { \
+            spdlog::log(spdlog::source_loc{__FILE__, __LINE__, __func__}, spdlog::level::info, fmt __VA_OPT__(,) __VA_ARGS__); \
+        } \
+    } while(0)
+#else
 #define yinfo(fmt, ...) ylog("info", fmt __VA_OPT__(,) __VA_ARGS__)
+#endif
 #else
 #define yinfo(fmt, ...) do {} while(0)
 #endif
 
 #if YTRACE_ENABLE_YWARN
+#if defined(YTRACE_USE_SPDLOG)
+#define ywarn(fmt, ...) \
+    do { \
+        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, "warn", fmt); \
+        if (_ytrace_enabled_) { \
+            spdlog::log(spdlog::source_loc{__FILE__, __LINE__, __func__}, spdlog::level::warn, fmt __VA_OPT__(,) __VA_ARGS__); \
+        } \
+    } while(0)
+#else
 #define ywarn(fmt, ...) ylog("warn", fmt __VA_OPT__(,) __VA_ARGS__)
+#endif
 #else
 #define ywarn(fmt, ...) do {} while(0)
 #endif

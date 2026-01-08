@@ -11,8 +11,10 @@ project(ytrace
     LANGUAGES CXX
 )
 
-# Include CPM for dependency management
-include(cmake/CPM.cmake)
+# Include CPM for dependency management (only if not already included by parent)
+if(NOT DEFINED CPM_INCLUDED)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CPM.cmake)
+endif()
 
 # Header-only library
 add_library(ytrace INTERFACE)
@@ -112,7 +114,7 @@ else()
 endif()
 
 # Optional: Build examples and tools
-option(YTRACE_BUILD_EXAMPLES "Build ytrace examples" OFF)
+option(YTRACE_BUILD_EXAMPLES "Build ytrace examples" ON)
 option(YTRACE_BUILD_TOOLS "Build ytrace-ctl tool" ON)
 
 if(YTRACE_BUILD_EXAMPLES)
