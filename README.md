@@ -114,26 +114,39 @@ ytrace-ctl disable --file "network" --function "debug_.*"  # Combined filters
 
 ## Building
 
-### Using CMake (Recommended for CPM)
+### Using CMake (Recommended)
 
 ```bash
-# Configure and build with defaults
+# Configure and build
 mkdir build && cd build
 cmake ..
 cmake --build .
+```
+
+**By default, CMake will automatically download and use spdlog.**
+
+To override:
+```bash
+# Use snprintf backend instead (no external dependencies)
+cmake .. -DYTRACE_WITH_SPDLOG=OFF
+
+# Use fmtlib instead (when spdlog disabled)
+cmake .. -DYTRACE_WITH_SPDLOG=OFF -DYTRACE_FORMAT=fmtlib
 
 # Disable specific macros at compile-time
 cmake .. -DYTRACE_ENABLE_YFUNC=OFF      # Disable yfunc macro
 cmake .. -DYTRACE_ENABLE_YDEBUG=OFF     # Disable ydebug macro
-cmake .. -DYTRACE_ENABLE_YINFO=OFF      # Disable yinfo macro
 
-# With different formatting backend
-cmake .. -DYTRACE_FORMAT=fmtlib
-cmake .. -DYTRACE_FORMAT=spdlog
-
-# Disable examples/tools
-cmake .. -DYTRACE_BUILD_EXAMPLES=OFF -DYTRACE_BUILD_TOOLS=OFF
+# Build with examples and disable tools
+cmake .. -DYTRACE_BUILD_EXAMPLES=ON -DYTRACE_BUILD_TOOLS=OFF
 ```
+
+**CMake Options:**
+- `YTRACE_WITH_SPDLOG` (default ON) - Auto-download and use spdlog
+- `YTRACE_FORMAT` - Backend when spdlog disabled: `snprintf` (default) or `fmtlib`
+- `YTRACE_ENABLE_*` - Compile-time macro switches (all default to ON)
+- `YTRACE_BUILD_EXAMPLES` (default OFF) - Build examples
+- `YTRACE_BUILD_TOOLS` (default ON) - Build ytrace-ctl
 
 **Compile-time macro switches** (all default to ON):
 - `YTRACE_ENABLE_YLOG` - Enable ylog macro
@@ -158,13 +171,15 @@ add_executable(myapp main.cpp)
 target_link_libraries(myapp PRIVATE ytrace::ytrace)
 ```
 
-Override options in CPM:
+Override options:
 ```cmake
 CPMAddPackage(
     NAME ytrace
     GIT_REPOSITORY "https://github.com/user/ytrace.git"
     GIT_TAG main
-    OPTIONS "YTRACE_ENABLE_YFUNC OFF" "YTRACE_FORMAT fmtlib"
+    OPTIONS 
+        "YTRACE_WITH_SPDLOG OFF"
+        "YTRACE_ENABLE_YFUNC OFF"
 )
 ```
 
@@ -179,13 +194,11 @@ make clean                     # Clean build artifacts
 
 ### Formatting Backends
 
-ytrace supports three formatting implementations, selectable at compile time:
+ytrace automatically selects the best available:
 
-- **snprintf** (default) - C-style formatting, no external dependencies
-- **fmtlib** - Modern, safe formatting (requires `fmt` library)
-- **spdlog** - Async logging with fmt backend (requires `spdlog` library)
-
-Choose the backend that best fits your project's dependencies and performance needs.
+- **spdlog** (default) - High-performance async logging with fmt backend (auto-downloaded)
+- **fmtlib** - Modern, safe formatting (can be auto-downloaded if spdlog disabled)
+- **snprintf** (fallback) - C-style formatting, no external dependencies
 
 ## Requirements
 

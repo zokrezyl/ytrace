@@ -1,9 +1,18 @@
 cmake_minimum_required(VERSION 3.21)
+
+# Suppress FetchContent deprecation warnings (CPM.cmake uses older API)
+if(POLICY CMP0169)
+    cmake_policy(SET CMP0169 OLD)
+endif()
+
 project(ytrace
     VERSION 1.0.0
     DESCRIPTION "Header-only C++20 runtime-controllable tracing library"
     LANGUAGES CXX
 )
+
+# Include CPM for dependency management
+include(cmake/CPM.cmake)
 
 # Header-only library
 add_library(ytrace INTERFACE)
@@ -63,25 +72,44 @@ else()
     target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YFUNC=0)
 endif()
 
-# Formatting backend option
-set(YTRACE_FORMAT "snprintf" CACHE STRING "Formatting backend: snprintf, fmtlib, or spdlog")
-set_property(CACHE YTRACE_FORMAT PROPERTY STRINGS "snprintf" "fmtlib" "spdlog")
+# Optional: Try to pull in spdlog
+option(YTRACE_WITH_SPDLOG "Use spdlog for logging" ON)
 
-if(YTRACE_FORMAT STREQUAL "fmtlib")
-    target_compile_definitions(ytrace INTERFACE YTRACE_USE_FMTLIB)
-    # fmtlib dependency (optional - users may provide it)
-    if(NOT TARGET fmt::fmt)
-        message(STATUS "ytrace: fmtlib backend selected, ensure fmt::fmt is available")
-    endif()
-elseif(YTRACE_FORMAT STREQUAL "spdlog")
+if(YTRACE_WITH_SPDLOG)
+    # spdlog requires fmt as dependency
+    CPMAddPackage(
+        NAME fmt
+        GITHUB_REPOSITORY fmtlib/fmt
+        GIT_TAG 10.2.1
+    )
+    
+    CPMAddPackage(
+        NAME spdlog
+        GITHUB_REPOSITORY gabime/spdlog
+        GIT_TAG v1.14.1
+        OPTIONS "SPDLOG_FMT_EXTERNAL ON"
+    )
+    message(STATUS "ytrace: Using spdlog formatting backend")
     target_compile_definitions(ytrace INTERFACE YTRACE_USE_SPDLOG)
-    # spdlog dependency (optional - users may provide it)
-    if(NOT TARGET spdlog::spdlog)
-        message(STATUS "ytrace: spdlog backend selected, ensure spdlog::spdlog is available")
+    target_link_libraries(ytrace INTERFACE spdlog::spdlog)
+else()
+    # Explicit formatting backend override
+    set(YTRACE_FORMAT "snprintf" CACHE STRING "Formatting backend: snprintf or fmtlib")
+    set_property(CACHE YTRACE_FORMAT PROPERTY STRINGS "snprintf" "fmtlib")
+
+    if(YTRACE_FORMAT STREQUAL "fmtlib")
+        CPMAddPackage(
+            NAME fmt
+            GITHUB_REPOSITORY fmtlib/fmt
+            GIT_TAG 10.2.1
+        )
+        target_compile_definitions(ytrace INTERFACE YTRACE_USE_FMTLIB)
+        target_link_libraries(ytrace INTERFACE fmt::fmt)
+        message(STATUS "ytrace: Using fmtlib formatting backend")
+    else()
+        message(STATUS "ytrace: Using snprintf formatting backend")
     endif()
 endif()
-
-message(STATUS "ytrace: Using ${YTRACE_FORMAT} formatting backend")
 
 # Optional: Build examples and tools
 option(YTRACE_BUILD_EXAMPLES "Build ytrace examples" OFF)
@@ -95,19 +123,8 @@ if(YTRACE_BUILD_TOOLS)
     add_subdirectory(src/ytrace)
 endif()
 
-# Install configuration for CPM
+# Install configuration (minimal for header-only lib)
 install(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
     DESTINATION include
-)
-
-install(
-    TARGETS ytrace
-    EXPORT ytraceTargets
-)
-
-install(
-    EXPORT ytraceTargets
-    NAMESPACE ytrace::
-    DESTINATION lib/cmake/ytrace
 )
