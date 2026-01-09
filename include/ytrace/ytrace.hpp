@@ -325,7 +325,8 @@ private:
         if (!command.empty() && command.back() == '\n') command.pop_back();
 
         std::string response = process_command(command.c_str());
-        write(client_fd, response.c_str(), response.size());
+        ssize_t n = write(client_fd, response.c_str(), response.size());
+        (void)n;  // suppress unused result warning
     }
 
     std::string process_command(const char* cmd) {

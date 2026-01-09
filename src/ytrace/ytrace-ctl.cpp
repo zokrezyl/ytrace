@@ -111,7 +111,8 @@ std::string send_command(const std::string& socket_path, const std::string& comm
 
     // Send command
     std::string cmd_with_newline = command + "\n";
-    write(fd, cmd_with_newline.c_str(), cmd_with_newline.size());
+    ssize_t n = write(fd, cmd_with_newline.c_str(), cmd_with_newline.size());
+    (void)n;  // suppress unused result warning
 
     // Read response
     std::string response;
