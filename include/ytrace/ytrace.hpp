@@ -747,7 +747,22 @@ namespace ytrace {
 #define ywarn(fmt, ...) do {} while(0)
 #endif
 
-// Function entry/exit tracer (RAII)
+// Error level tracing
+#if YTRACE_ENABLE_YERROR
+#if defined(YTRACE_USE_SPDLOG)
+#define yerror(fmt, ...) \
+    do { \
+        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, "error", fmt); \
+        if (_ytrace_enabled_) { \
+            spdlog::log(spdlog::source_loc{__FILE__, __LINE__, __func__}, spdlog::level::err, fmt __VA_OPT__(,) __VA_ARGS__); \
+        } \
+    } while(0)
+#else
+#define yerror(fmt, ...) ylog("error", fmt __VA_OPT__(,) __VA_ARGS__)
+#endif
+#else
+#define yerror(fmt, ...) do {} while(0)
+#endif
 #if YTRACE_ENABLE_YFUNC
 #define yfunc() \
     static bool _ytrace_entry_enabled_ = ytrace::detail::register_trace_point(&_ytrace_entry_enabled_, __FILE__, __LINE__, __func__, "func-entry", ""); \

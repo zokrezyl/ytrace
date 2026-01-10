@@ -35,6 +35,7 @@ option(YTRACE_ENABLE_YTRACE "Enable ytrace macro" ON)
 option(YTRACE_ENABLE_YDEBUG "Enable ydebug macro" ON)
 option(YTRACE_ENABLE_YINFO "Enable yinfo macro" ON)
 option(YTRACE_ENABLE_YWARN "Enable ywarn macro" ON)
+option(YTRACE_ENABLE_YERROR "Enable yerror macro" ON)
 option(YTRACE_ENABLE_YFUNC "Enable yfunc macro" ON)
 
 # Apply compile definitions
@@ -66,6 +67,12 @@ if(YTRACE_ENABLE_YWARN)
     target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YWARN=1)
 else()
     target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YWARN=0)
+endif()
+
+if(YTRACE_ENABLE_YERROR)
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YERROR=1)
+else()
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YERROR=0)
 endif()
 
 if(YTRACE_ENABLE_YFUNC)
