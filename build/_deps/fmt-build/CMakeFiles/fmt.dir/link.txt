@@ -1,2 +1,0 @@
-/home/misi/.local/state/nix/profiles/dev/profile/bin/ar qc libfmt.a CMakeFiles/fmt.dir/src/format.cc.o CMakeFiles/fmt.dir/src/os.cc.o
-/home/misi/.local/state/nix/profiles/dev/profile/bin/ranlib libfmt.a

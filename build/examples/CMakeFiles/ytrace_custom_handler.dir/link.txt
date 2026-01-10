@@ -1,1 +1,0 @@
-/home/misi/.local/state/nix/profiles/dev/profile/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/ytrace_custom_handler.dir/link.d CMakeFiles/ytrace_custom_handler.dir/custom_handler.cpp.o -o ytrace_custom_handler  ../_deps/spdlog-build/libspdlog.a ../_deps/fmt-build/libfmt.a
