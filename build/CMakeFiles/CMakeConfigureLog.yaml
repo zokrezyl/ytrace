@@ -1,0 +1,1820 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    searched_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/uname"
+      - "/home/misi/.krew/bin/uname"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/uname"
+      - "/home/misi/work/my/yetty/.venv/bin/uname"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/uname"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/uname"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/uname"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/uname"
+      - "/home/misi/.nix-profile/bin/uname"
+      - "/nix/var/nix/profiles/default/bin/uname"
+      - "/usr/local/sbin/uname"
+      - "/usr/local/bin/uname"
+      - "/usr/sbin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      The system is: Linux - 6.8.0-83-generic - x86_64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_MAKE_PROGRAM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gmake"
+      - "make"
+      - "smake"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    searched_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/gmake"
+      - "/home/misi/.krew/bin/gmake"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/gmake"
+      - "/home/misi/work/my/yetty/.venv/bin/gmake"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/gmake"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/gmake"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/gmake"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/gmake"
+      - "/home/misi/.nix-profile/bin/gmake"
+      - "/nix/var/nix/profiles/default/bin/gmake"
+      - "/usr/local/sbin/gmake"
+      - "/usr/local/bin/gmake"
+      - "/usr/sbin/gmake"
+    found: "/usr/bin/gmake"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompiler.cmake:73 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:69 (_cmake_find_compiler)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER"
+    description: "CXX compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "c++"
+      - "CC"
+      - "g++"
+      - "aCC"
+      - "cl"
+      - "bcc"
+      - "xlC"
+      - "icpx"
+      - "icx"
+      - "clang++"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/c++"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /home/misi/.local/state/nix/profiles/dev/profile/bin/c++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is GNU, found in:
+        /home/misi/work/my/ytrace/build/CMakeFiles/4.1.2/CompilerIdCXX/a.out
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ar"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ranlib"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "strip"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/strip"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ld"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/ld"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "nm"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/nm"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objdump"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/objdump"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objcopy"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/objcopy"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "readelf"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/readelf"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "dlltool"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    searched_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/dlltool"
+      - "/home/misi/.krew/bin/dlltool"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/dlltool"
+      - "/home/misi/work/my/yetty/.venv/bin/dlltool"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/dlltool"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/dlltool"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/dlltool"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/dlltool"
+      - "/home/misi/.nix-profile/bin/dlltool"
+      - "/nix/var/nix/profiles/default/bin/dlltool"
+      - "/usr/local/sbin/dlltool"
+      - "/usr/local/bin/dlltool"
+      - "/usr/sbin/dlltool"
+      - "/usr/bin/dlltool"
+      - "/sbin/dlltool"
+      - "/bin/dlltool"
+      - "/usr/games/dlltool"
+      - "/usr/local/games/dlltool"
+      - "/snap/bin/dlltool"
+      - "/home/misi/go/bin/dlltool"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "addr2line"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/addr2line"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "tapi"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    searched_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/tapi"
+      - "/home/misi/.krew/bin/tapi"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/tapi"
+      - "/home/misi/work/my/yetty/.venv/bin/tapi"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/tapi"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/tapi"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/tapi"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/tapi"
+      - "/home/misi/.nix-profile/bin/tapi"
+      - "/nix/var/nix/profiles/default/bin/tapi"
+      - "/usr/local/sbin/tapi"
+      - "/usr/local/bin/tapi"
+      - "/usr/sbin/tapi"
+      - "/usr/bin/tapi"
+      - "/sbin/tapi"
+      - "/bin/tapi"
+      - "/usr/games/tapi"
+      - "/usr/local/games/tapi"
+      - "/snap/bin/tapi"
+      - "/home/misi/go/bin/tapi"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ar-14.3"
+      - "gcc-ar-14"
+      - "gcc-ar14"
+      - "gcc-ar"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    searched_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/gcc-ar-14.3"
+      - "/home/misi/.krew/bin/gcc-ar-14.3"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/gcc-ar-14.3"
+      - "/home/misi/work/my/yetty/.venv/bin/gcc-ar-14.3"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/gcc-ar-14.3"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/gcc-ar-14.3"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/gcc-ar-14.3"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/gcc-ar-14.3"
+      - "/home/misi/.nix-profile/bin/gcc-ar-14.3"
+      - "/nix/var/nix/profiles/default/bin/gcc-ar-14.3"
+      - "/usr/local/sbin/gcc-ar-14.3"
+      - "/usr/local/bin/gcc-ar-14.3"
+      - "/usr/sbin/gcc-ar-14.3"
+      - "/usr/bin/gcc-ar-14.3"
+      - "/sbin/gcc-ar-14.3"
+      - "/bin/gcc-ar-14.3"
+      - "/usr/games/gcc-ar-14.3"
+      - "/usr/local/games/gcc-ar-14.3"
+      - "/snap/bin/gcc-ar-14.3"
+      - "/home/misi/go/bin/gcc-ar-14.3"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/gcc-ar-14"
+      - "/home/misi/.krew/bin/gcc-ar-14"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/gcc-ar-14"
+      - "/home/misi/work/my/yetty/.venv/bin/gcc-ar-14"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/gcc-ar-14"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/gcc-ar-14"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/gcc-ar-14"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/gcc-ar-14"
+      - "/home/misi/.nix-profile/bin/gcc-ar-14"
+      - "/nix/var/nix/profiles/default/bin/gcc-ar-14"
+      - "/usr/local/sbin/gcc-ar-14"
+      - "/usr/local/bin/gcc-ar-14"
+      - "/usr/sbin/gcc-ar-14"
+      - "/usr/bin/gcc-ar-14"
+      - "/sbin/gcc-ar-14"
+      - "/bin/gcc-ar-14"
+      - "/usr/games/gcc-ar-14"
+      - "/usr/local/games/gcc-ar-14"
+      - "/snap/bin/gcc-ar-14"
+      - "/home/misi/go/bin/gcc-ar-14"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/gcc-ar14"
+      - "/home/misi/.krew/bin/gcc-ar14"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/gcc-ar14"
+      - "/home/misi/work/my/yetty/.venv/bin/gcc-ar14"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/gcc-ar14"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/gcc-ar14"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/gcc-ar14"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/gcc-ar14"
+      - "/home/misi/.nix-profile/bin/gcc-ar14"
+      - "/nix/var/nix/profiles/default/bin/gcc-ar14"
+      - "/usr/local/sbin/gcc-ar14"
+      - "/usr/local/bin/gcc-ar14"
+      - "/usr/sbin/gcc-ar14"
+      - "/usr/bin/gcc-ar14"
+      - "/sbin/gcc-ar14"
+      - "/bin/gcc-ar14"
+      - "/usr/games/gcc-ar14"
+      - "/usr/local/games/gcc-ar14"
+      - "/snap/bin/gcc-ar14"
+      - "/home/misi/go/bin/gcc-ar14"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/gcc-ar"
+      - "/home/misi/.krew/bin/gcc-ar"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/gcc-ar"
+      - "/home/misi/work/my/yetty/.venv/bin/gcc-ar"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/gcc-ar"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/gcc-ar"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/gcc-ar"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/gcc-ar"
+      - "/home/misi/.nix-profile/bin/gcc-ar"
+      - "/nix/var/nix/profiles/default/bin/gcc-ar"
+      - "/usr/local/sbin/gcc-ar"
+      - "/usr/local/bin/gcc-ar"
+      - "/usr/sbin/gcc-ar"
+    found: "/usr/bin/gcc-ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:8 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ranlib-14.3"
+      - "gcc-ranlib-14"
+      - "gcc-ranlib14"
+      - "gcc-ranlib"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    searched_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/gcc-ranlib-14.3"
+      - "/home/misi/.krew/bin/gcc-ranlib-14.3"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/gcc-ranlib-14.3"
+      - "/home/misi/work/my/yetty/.venv/bin/gcc-ranlib-14.3"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/gcc-ranlib-14.3"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/gcc-ranlib-14.3"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/gcc-ranlib-14.3"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/gcc-ranlib-14.3"
+      - "/home/misi/.nix-profile/bin/gcc-ranlib-14.3"
+      - "/nix/var/nix/profiles/default/bin/gcc-ranlib-14.3"
+      - "/usr/local/sbin/gcc-ranlib-14.3"
+      - "/usr/local/bin/gcc-ranlib-14.3"
+      - "/usr/sbin/gcc-ranlib-14.3"
+      - "/usr/bin/gcc-ranlib-14.3"
+      - "/sbin/gcc-ranlib-14.3"
+      - "/bin/gcc-ranlib-14.3"
+      - "/usr/games/gcc-ranlib-14.3"
+      - "/usr/local/games/gcc-ranlib-14.3"
+      - "/snap/bin/gcc-ranlib-14.3"
+      - "/home/misi/go/bin/gcc-ranlib-14.3"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/gcc-ranlib-14"
+      - "/home/misi/.krew/bin/gcc-ranlib-14"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/gcc-ranlib-14"
+      - "/home/misi/work/my/yetty/.venv/bin/gcc-ranlib-14"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/gcc-ranlib-14"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/gcc-ranlib-14"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/gcc-ranlib-14"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/gcc-ranlib-14"
+      - "/home/misi/.nix-profile/bin/gcc-ranlib-14"
+      - "/nix/var/nix/profiles/default/bin/gcc-ranlib-14"
+      - "/usr/local/sbin/gcc-ranlib-14"
+      - "/usr/local/bin/gcc-ranlib-14"
+      - "/usr/sbin/gcc-ranlib-14"
+      - "/usr/bin/gcc-ranlib-14"
+      - "/sbin/gcc-ranlib-14"
+      - "/bin/gcc-ranlib-14"
+      - "/usr/games/gcc-ranlib-14"
+      - "/usr/local/games/gcc-ranlib-14"
+      - "/snap/bin/gcc-ranlib-14"
+      - "/home/misi/go/bin/gcc-ranlib-14"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/gcc-ranlib14"
+      - "/home/misi/.krew/bin/gcc-ranlib14"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/gcc-ranlib14"
+      - "/home/misi/work/my/yetty/.venv/bin/gcc-ranlib14"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/gcc-ranlib14"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/gcc-ranlib14"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/gcc-ranlib14"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/gcc-ranlib14"
+      - "/home/misi/.nix-profile/bin/gcc-ranlib14"
+      - "/nix/var/nix/profiles/default/bin/gcc-ranlib14"
+      - "/usr/local/sbin/gcc-ranlib14"
+      - "/usr/local/bin/gcc-ranlib14"
+      - "/usr/sbin/gcc-ranlib14"
+      - "/usr/bin/gcc-ranlib14"
+      - "/sbin/gcc-ranlib14"
+      - "/bin/gcc-ranlib14"
+      - "/usr/games/gcc-ranlib14"
+      - "/usr/local/games/gcc-ranlib14"
+      - "/snap/bin/gcc-ranlib14"
+      - "/home/misi/go/bin/gcc-ranlib14"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/gcc-ranlib"
+      - "/home/misi/.krew/bin/gcc-ranlib"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/gcc-ranlib"
+      - "/home/misi/work/my/yetty/.venv/bin/gcc-ranlib"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/gcc-ranlib"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/gcc-ranlib"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/gcc-ranlib"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/gcc-ranlib"
+      - "/home/misi/.nix-profile/bin/gcc-ranlib"
+      - "/nix/var/nix/profiles/default/bin/gcc-ranlib"
+      - "/usr/local/sbin/gcc-ranlib"
+      - "/usr/local/bin/gcc-ranlib"
+      - "/usr/sbin/gcc-ranlib"
+    found: "/usr/bin/gcc-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:8 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-gZVQrw"
+      binary: "/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-gZVQrw"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-gZVQrw'
+        
+        Run Build Command(s): /home/misi/.local/state/nix/profiles/dev/profile/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_85be6/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_85be6.dir/build.make CMakeFiles/cmTC_85be6.dir/build
+        gmake[1]: Entering directory '/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-gZVQrw'
+        Building CXX object CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o
+        /home/misi/.local/state/nix/profiles/dev/profile/bin/c++   -v -o CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o -c /home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/bin/g++
+        Target: x86_64-unknown-linux-gnu
+        Configured with: ../gcc-14.3.0/configure --prefix=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gcc-14.3.0 --with-gmp-include=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gmp-6.3.0-dev/include --with-gmp-lib=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gmp-6.3.0/lib --with-mpfr-include=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-mpfr-4.2.2-dev/include --with-mpfr-lib=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-mpfr-4.2.2/lib --with-mpc=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-libmpc-1.3.1 --with-native-system-header-dir=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-glibc-2.40-66-dev/include --with-build-sysroot=/ --with-gxx-include-dir=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gcc-14.3.0/include/c++/14.3.0/ --program-prefix= --enable-lto --disable-libstdcxx-pch --without-included-gettext --with-system-zlib --enable-static --enable-languages=c,c++ --disable-multilib --enable-plugin --disable-libcc1 --with-isl=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-isl-0.20 --disable-bootstrap --enable-default-pie --build=x86_64-unknown-linux-gnu --host=x86_64-unknown-linux-gnu --target=x86_64-unknown-linux-gnu
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 14.3.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-fno-omit-frame-pointer' '-mno-omit-leaf-frame-pointer' '-v' '-o' 'CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-B' '/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/' '-idirafter' '/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include' '-idirafter' '/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed' '-B' '/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_85be6.dir/'
+         /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/cc1plus -quiet -v -D_GNU_SOURCE -idirafter /nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include -idirafter /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed /home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_85be6.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mno-omit-leaf-frame-pointer -mtune=generic -march=x86-64 -version -fno-omit-frame-pointer -o /tmp/ccv53Det.s
+        GNU C++17 (GCC) version 14.3.0 (x86_64-unknown-linux-gnu)
+        	compiled by GNU C version 14.3.0, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.20-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../../../x86_64-unknown-linux-gnu/include"
+        ignoring duplicate directory "/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include"
+        ignoring duplicate directory "/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0/
+         /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0//x86_64-unknown-linux-gnu
+         /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0//backward
+         /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include
+         /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include
+         /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed
+         /nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include
+        End of search list.
+        Compiler executable checksum: c4ab9e952f2e55b8edd7bf0f164e9d75
+        COLLECT_GCC_OPTIONS='-fno-omit-frame-pointer' '-mno-omit-leaf-frame-pointer' '-v' '-o' 'CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-B' '/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/' '-idirafter' '/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include' '-idirafter' '/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed' '-B' '/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_85be6.dir/'
+         as -v --64 -o CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccv53Det.s
+        GNU assembler version 2.44 (x86_64-unknown-linux-gnu) using BFD version (GNU Binutils) 2.44
+        COMPILER_PATH=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/:/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/
+        LIBRARY_PATH=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/:/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../../
+        COLLECT_GCC_OPTIONS='-fno-omit-frame-pointer' '-mno-omit-leaf-frame-pointer' '-v' '-o' 'CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-B' '/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/' '-idirafter' '/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include' '-idirafter' '/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed' '-B' '/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_85be6
+        /home/misi/.local/state/nix/profiles/dev/profile/bin/cmake -E cmake_link_script CMakeFiles/cmTC_85be6.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/bin/g++
+        COLLECT_LTO_WRAPPER=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/lto-wrapper
+        Target: x86_64-unknown-linux-gnu
+        Configured with: ../gcc-14.3.0/configure --prefix=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gcc-14.3.0 --with-gmp-include=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gmp-6.3.0-dev/include --with-gmp-lib=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gmp-6.3.0/lib --with-mpfr-include=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-mpfr-4.2.2-dev/include --with-mpfr-lib=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-mpfr-4.2.2/lib --with-mpc=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-libmpc-1.3.1 --with-native-system-header-dir=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-glibc-2.40-66-dev/include --with-build-sysroot=/ --with-gxx-include-dir=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gcc-14.3.0/include/c++/14.3.0/ --program-prefix= --enable-lto --disable-libstdcxx-pch --without-included-gettext --with-system-zlib --enable-static --enable-languages=c,c++ --disable-multilib --enable-plugin --disable-libcc1 --with-isl=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-isl-0.20 --disable-bootstrap --enable-default-pie --build=x86_64-unknown-linux-gnu --host=x86_64-unknown-linux-gnu --target=x86_64-unknown-linux-gnu
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 14.3.0 (GCC) 
+        COMPILER_PATH=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/:/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/
+        LIBRARY_PATH=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/:/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../../
+        COLLECT_GCC_OPTIONS='-fno-omit-frame-pointer' '-mno-omit-leaf-frame-pointer' '-v' '-o' 'cmTC_85be6' '-B' '/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/' '-idirafter' '/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include' '-idirafter' '/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed' '-B' '/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib' '-L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0' '-L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_85be6.'
+         /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/collect2 -plugin /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/liblto_plugin.so -plugin-opt=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPISDkY.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib64/ld-linux-x86-64.so.2 -pie -o cmTC_85be6 /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/Scrt1.o /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crti.o /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtbeginS.o -L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0 -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0 -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../.. -dynamic-linker=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/ld-linux-x86-64.so.2 -v CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtendS.o /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crtn.o
+        collect2 version 14.3.0
+        /nix/store/xwydcyvlsa3cvssk0y5llgdhlhjvmqdm-binutils-wrapper-2.44/bin/ld -plugin /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/liblto_plugin.so -plugin-opt=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPISDkY.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib64/ld-linux-x86-64.so.2 -pie -o cmTC_85be6 /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/Scrt1.o /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crti.o /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtbeginS.o -L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0 -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0 -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../.. -dynamic-linker=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/ld-linux-x86-64.so.2 -v CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtendS.o /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crtn.o
+        GNU ld (GNU Binutils) 2.44
+        COLLECT_GCC_OPTIONS='-fno-omit-frame-pointer' '-mno-omit-leaf-frame-pointer' '-v' '-o' 'cmTC_85be6' '-B' '/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/' '-idirafter' '/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include' '-idirafter' '/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed' '-B' '/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib' '-L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0' '-L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_85be6.'
+        /home/misi/.local/state/nix/profiles/dev/profile/bin/c++  -v -Wl,-v CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_85be6
+        gmake[1]: Leaving directory '/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-gZVQrw'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0/]
+          add: [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0//x86_64-unknown-linux-gnu]
+          add: [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0//backward]
+          add: [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include]
+          add: [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include]
+          add: [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed]
+          add: [/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include]
+        end of search list found
+        collapse include dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0/] ==> [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0]
+        collapse include dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0//x86_64-unknown-linux-gnu] ==> [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0/x86_64-unknown-linux-gnu]
+        collapse include dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0//backward] ==> [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0/backward]
+        collapse include dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include] ==> [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include]
+        collapse include dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include] ==> [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include]
+        collapse include dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed] ==> [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed]
+        collapse include dir [/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include] ==> [/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include]
+        implicit include dirs: [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0;/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0/x86_64-unknown-linux-gnu;/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0/backward;/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include;/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include;/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed;/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-gZVQrw']
+        ignore line: []
+        ignore line: [Run Build Command(s): /home/misi/.local/state/nix/profiles/dev/profile/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_85be6/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_85be6.dir/build.make CMakeFiles/cmTC_85be6.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-gZVQrw']
+        ignore line: [Building CXX object CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/home/misi/.local/state/nix/profiles/dev/profile/bin/c++   -v -o CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o -c /home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/bin/g++]
+        ignore line: [Target: x86_64-unknown-linux-gnu]
+        ignore line: [Configured with: ../gcc-14.3.0/configure --prefix=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gcc-14.3.0 --with-gmp-include=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gmp-6.3.0-dev/include --with-gmp-lib=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gmp-6.3.0/lib --with-mpfr-include=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-mpfr-4.2.2-dev/include --with-mpfr-lib=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-mpfr-4.2.2/lib --with-mpc=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-libmpc-1.3.1 --with-native-system-header-dir=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-glibc-2.40-66-dev/include --with-build-sysroot=/ --with-gxx-include-dir=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gcc-14.3.0/include/c++/14.3.0/ --program-prefix= --enable-lto --disable-libstdcxx-pch --without-included-gettext --with-system-zlib --enable-static --enable-languages=c c++ --disable-multilib --enable-plugin --disable-libcc1 --with-isl=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-isl-0.20 --disable-bootstrap --enable-default-pie --build=x86_64-unknown-linux-gnu --host=x86_64-unknown-linux-gnu --target=x86_64-unknown-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 14.3.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-fno-omit-frame-pointer' '-mno-omit-leaf-frame-pointer' '-v' '-o' 'CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-B' '/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/' '-idirafter' '/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include' '-idirafter' '/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed' '-B' '/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_85be6.dir/']
+        ignore line: [ /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/cc1plus -quiet -v -D_GNU_SOURCE -idirafter /nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include -idirafter /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed /home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_85be6.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mno-omit-leaf-frame-pointer -mtune=generic -march=x86-64 -version -fno-omit-frame-pointer -o /tmp/ccv53Det.s]
+        ignore line: [GNU C++17 (GCC) version 14.3.0 (x86_64-unknown-linux-gnu)]
+        ignore line: [	compiled by GNU C version 14.3.0  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.20-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../../../x86_64-unknown-linux-gnu/include"]
+        ignore line: [ignoring duplicate directory "/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include"]
+        ignore line: [ignoring duplicate directory "/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0/]
+        ignore line: [ /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0//x86_64-unknown-linux-gnu]
+        ignore line: [ /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include/c++/14.3.0//backward]
+        ignore line: [ /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include]
+        ignore line: [ /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/include]
+        ignore line: [ /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed]
+        ignore line: [ /nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: c4ab9e952f2e55b8edd7bf0f164e9d75]
+        ignore line: [COLLECT_GCC_OPTIONS='-fno-omit-frame-pointer' '-mno-omit-leaf-frame-pointer' '-v' '-o' 'CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-B' '/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/' '-idirafter' '/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include' '-idirafter' '/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed' '-B' '/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_85be6.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccv53Det.s]
+        ignore line: [GNU assembler version 2.44 (x86_64-unknown-linux-gnu) using BFD version (GNU Binutils) 2.44]
+        ignore line: [COMPILER_PATH=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/:/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/:/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../../]
+        ignore line: [COLLECT_GCC_OPTIONS='-fno-omit-frame-pointer' '-mno-omit-leaf-frame-pointer' '-v' '-o' 'CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-B' '/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/' '-idirafter' '/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include' '-idirafter' '/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed' '-B' '/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_85be6]
+        ignore line: [/home/misi/.local/state/nix/profiles/dev/profile/bin/cmake -E cmake_link_script CMakeFiles/cmTC_85be6.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/bin/g++]
+        ignore line: [COLLECT_LTO_WRAPPER=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/lto-wrapper]
+        ignore line: [Target: x86_64-unknown-linux-gnu]
+        ignore line: [Configured with: ../gcc-14.3.0/configure --prefix=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gcc-14.3.0 --with-gmp-include=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gmp-6.3.0-dev/include --with-gmp-lib=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gmp-6.3.0/lib --with-mpfr-include=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-mpfr-4.2.2-dev/include --with-mpfr-lib=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-mpfr-4.2.2/lib --with-mpc=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-libmpc-1.3.1 --with-native-system-header-dir=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-glibc-2.40-66-dev/include --with-build-sysroot=/ --with-gxx-include-dir=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-gcc-14.3.0/include/c++/14.3.0/ --program-prefix= --enable-lto --disable-libstdcxx-pch --without-included-gettext --with-system-zlib --enable-static --enable-languages=c c++ --disable-multilib --enable-plugin --disable-libcc1 --with-isl=/nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-isl-0.20 --disable-bootstrap --enable-default-pie --build=x86_64-unknown-linux-gnu --host=x86_64-unknown-linux-gnu --target=x86_64-unknown-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 14.3.0 (GCC) ]
+        ignore line: [COMPILER_PATH=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/:/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/:/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/:/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../../]
+        ignore line: [COLLECT_GCC_OPTIONS='-fno-omit-frame-pointer' '-mno-omit-leaf-frame-pointer' '-v' '-o' 'cmTC_85be6' '-B' '/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/' '-idirafter' '/nix/store/gi4cz4ir3zlwhf1azqfgxqdnczfrwsr7-glibc-2.40-66-dev/include' '-idirafter' '/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/include-fixed' '-B' '/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib' '-L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0' '-L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_85be6.']
+        link line: [ /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/collect2 -plugin /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/liblto_plugin.so -plugin-opt=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPISDkY.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib64/ld-linux-x86-64.so.2 -pie -o cmTC_85be6 /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/Scrt1.o /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crti.o /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtbeginS.o -L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0 -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0 -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../.. -dynamic-linker=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/ld-linux-x86-64.so.2 -v CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtendS.o /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crtn.o]
+          arg [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccPISDkY.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_85be6] ==> ignore
+          arg [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/Scrt1.o] ==> obj [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/Scrt1.o]
+          arg [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crti.o] ==> obj [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crti.o]
+          arg [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtbeginS.o] ==> obj [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtbeginS.o]
+          arg [-L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib] ==> dir [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib]
+          arg [-L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0] ==> dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0]
+          arg [-L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib] ==> dir [/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib]
+          arg [-L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib] ==> dir [/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib]
+          arg [-L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib] ==> dir [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib]
+          arg [-L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib] ==> dir [/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib]
+          arg [-L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0] ==> dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0]
+          arg [-L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../..] ==> dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../..]
+          arg [-dynamic-linker=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/ld-linux-x86-64.so.2] ==> ignore
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtendS.o] ==> obj [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtendS.o]
+          arg [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crtn.o] ==> obj [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crtn.o]
+        ignore line: [collect2 version 14.3.0]
+        ignore line: [/nix/store/xwydcyvlsa3cvssk0y5llgdhlhjvmqdm-binutils-wrapper-2.44/bin/ld -plugin /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/liblto_plugin.so -plugin-opt=/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/libexec/gcc/x86_64-unknown-linux-gnu/14.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPISDkY.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib64/ld-linux-x86-64.so.2 -pie -o cmTC_85be6 /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/Scrt1.o /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crti.o /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtbeginS.o -L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0 -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib -L/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0 -L/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../.. -dynamic-linker=/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/ld-linux-x86-64.so.2 -v CMakeFiles/cmTC_85be6.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtendS.o /nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crtn.o]
+        linker tool for 'CXX': /nix/store/xwydcyvlsa3cvssk0y5llgdhlhjvmqdm-binutils-wrapper-2.44/bin/ld
+        collapse library dir [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib] ==> [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib]
+        collapse library dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0] ==> [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0]
+        collapse library dir [/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib] ==> [/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib]
+        collapse library dir [/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib] ==> [/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib]
+        collapse library dir [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib] ==> [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib]
+        collapse library dir [/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib] ==> [/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib]
+        collapse library dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0] ==> [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0]
+        collapse library dir [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/../../..] ==> [/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/Scrt1.o;/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crti.o;/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtbeginS.o;/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0/crtendS.o;/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib/crtn.o]
+        implicit dirs: [/nix/store/xx7cm72qy2c0643cm1ipngd87aqwkcdp-glibc-2.40-66/lib;/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib/gcc/x86_64-unknown-linux-gnu/14.3.0;/nix/store/xm08aqdd7pxcdhm0ak6aqb1v7hw5q6ri-gcc-14.3.0-lib/lib;/nix/store/kzq78n13l8w24jn8bx4djj79k5j717f1-gcc-14.3.0/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      Running the CXX compiler's linker: "/nix/store/xwydcyvlsa3cvssk0y5llgdhlhjvmqdm-binutils-wrapper-2.44/bin/ld" "-v"
+      GNU ld (GNU Binutils) 2.44
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/FindGit.cmake:86 (find_program)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/FetchContent.cmake:1874 (find_package)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/FetchContent.cmake:1609 (__FetchContent_populateSubbuild)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/FetchContent.cmake:2145:EVAL:2 (__FetchContent_doPopulation)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/FetchContent.cmake:2145 (cmake_language)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/FetchContent.cmake:2384 (__FetchContent_Populate)"
+      - "cmake/CPM.cmake:1208 (FetchContent_MakeAvailable)"
+      - "cmake/CPM.cmake:989 (cpm_fetch_package)"
+      - "CMakeLists.txt:82 (CPMAddPackage)"
+    mode: "program"
+    variable: "GIT_EXECUTABLE"
+    description: "Git command line client"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "git"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/sbin/"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+    found: "/home/misi/.local/state/nix/profiles/dev/profile/bin/git"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/misi/.local/state/nix/profiles/dev/profile"
+        - "/usr/local"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CheckCXXSourceCompiles.cmake:103 (cmake_check_source_compiles)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/FindThreads.cmake:99 (check_cxx_source_compiles)"
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "build/_deps/spdlog-src/CMakeLists.txt:144 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-QX8d1J"
+      binary: "/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-QX8d1J"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-QX8d1J'
+        
+        Run Build Command(s): /home/misi/.local/state/nix/profiles/dev/profile/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ee3c8/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ee3c8.dir/build.make CMakeFiles/cmTC_ee3c8.dir/build
+        gmake[1]: Entering directory '/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-QX8d1J'
+        Building CXX object CMakeFiles/cmTC_ee3c8.dir/src.cxx.o
+        /home/misi/.local/state/nix/profiles/dev/profile/bin/c++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=c++11 -o CMakeFiles/cmTC_ee3c8.dir/src.cxx.o -c /home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-QX8d1J/src.cxx
+        Linking CXX executable cmTC_ee3c8
+        /home/misi/.local/state/nix/profiles/dev/profile/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ee3c8.dir/link.txt --verbose=1
+        /home/misi/.local/state/nix/profiles/dev/profile/bin/c++ CMakeFiles/cmTC_ee3c8.dir/src.cxx.o -o cmTC_ee3c8
+        gmake[1]: Leaving directory '/home/misi/work/my/ytrace/build/CMakeFiles/CMakeScratch/TryCompile-QX8d1J'
+        
+      exitCode: 0
+...

@@ -74,16 +74,18 @@ else()
     target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YFUNC=0)
 endif()
 
-# Optional: Try to pull in spdlog
+# Optional: Try to pull in spdlog (skip if already available from parent)
 option(YTRACE_WITH_SPDLOG "Use spdlog for logging" ON)
 
-if(YTRACE_WITH_SPDLOG)
+if(YTRACE_WITH_SPDLOG AND NOT TARGET spdlog::spdlog)
     # spdlog requires fmt as dependency
-    CPMAddPackage(
-        NAME fmt
-        GITHUB_REPOSITORY fmtlib/fmt
-        GIT_TAG 10.2.1
-    )
+    if(NOT TARGET fmt::fmt)
+        CPMAddPackage(
+            NAME fmt
+            GITHUB_REPOSITORY fmtlib/fmt
+            GIT_TAG 10.2.1
+        )
+    endif()
     
     CPMAddPackage(
         NAME spdlog
@@ -91,6 +93,10 @@ if(YTRACE_WITH_SPDLOG)
         GIT_TAG v1.14.1
         OPTIONS "SPDLOG_FMT_EXTERNAL ON"
     )
+    message(STATUS "ytrace: Downloaded and using spdlog")
+endif()
+
+if(YTRACE_WITH_SPDLOG AND TARGET spdlog::spdlog)
     message(STATUS "ytrace: Using spdlog formatting backend")
     target_compile_definitions(ytrace INTERFACE YTRACE_USE_SPDLOG)
     target_link_libraries(ytrace INTERFACE spdlog::spdlog)

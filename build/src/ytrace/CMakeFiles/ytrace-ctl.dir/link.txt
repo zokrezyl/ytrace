@@ -1,0 +1,1 @@
+/home/misi/.local/state/nix/profiles/dev/profile/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/ytrace-ctl.dir/link.d "CMakeFiles/ytrace-ctl.dir/ytrace-ctl.cpp.o" -o ytrace-ctl  ../../_deps/spdlog-build/libspdlog.a ../../_deps/fmt-build/libfmt.a

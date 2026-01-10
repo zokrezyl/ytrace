@@ -1,0 +1,95 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:16 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/"
+      - "/home/misi/.krew/bin/"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/"
+      - "/home/misi/work/my/yetty/.venv/bin/"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/"
+      - "/home/misi/.nix-profile/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/snap/bin/"
+      - "/home/misi/go/bin/"
+    searched_directories:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/bin/uname"
+      - "/home/misi/.krew/bin/uname"
+      - "/home/misi/.local/state/nix/profiles/zsh/profile/bin/uname"
+      - "/home/misi/work/my/yetty/.venv/bin/uname"
+      - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin/uname"
+      - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin/uname"
+      - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin/uname"
+      - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin/uname"
+      - "/home/misi/.nix-profile/bin/uname"
+      - "/nix/var/nix/profiles/default/bin/uname"
+      - "/usr/local/sbin/uname"
+      - "/usr/local/bin/uname"
+      - "/usr/sbin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/work/my/yetty/.venv/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/nix/store/gmbfsbli21z7c0jljb3d212jikm6b2fp-which-2.23/bin"
+        - "/nix/store/78h7lqxn1pbbzgqk91i9r74hdc3q7gg3-twm-1.0.12/bin"
+        - "/nix/store/1dwmakx0lzh65p5wy6n2rl5cx0k7kxh7-xauth-1.1.4/bin"
+        - "/nix/store/ra3aq0bx3qcyfl1w4zqqyaqr8d4c4lcf-xterm-399/bin"
+        - "/home/misi/.local/state/nix/profiles/dev/profile/bin"
+        - "/home/misi/.krew/bin"
+        - "/home/misi/.local/state/nix/profiles/zsh/profile/bin"
+        - "/home/misi/.nix-profile/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/snap/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+        - "/home/misi/go/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/misi/.local/state/nix/profiles/dev/profile/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "CMakeLists.txt:16 (project)"
+    message: |
+      The system is: Linux - 6.8.0-83-generic - x86_64
+...

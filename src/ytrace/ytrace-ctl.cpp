@@ -117,7 +117,6 @@ std::string send_command(const std::string& socket_path, const std::string& comm
     // Read response
     std::string response;
     char buffer[4096];
-    ssize_t n;
     while ((n = read(fd, buffer, sizeof(buffer) - 1)) > 0) {
         buffer[n] = '\0';
         response += buffer;

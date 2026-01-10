@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/ytrace_socket_control.dir/socket_control.cpp.o -o ytrace_socket_control  ../_deps/spdlog-build/libspdlog.a ../_deps/fmt-build/libfmt.a 

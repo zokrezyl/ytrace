@@ -1,0 +1,11 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/misi/work/my/ytrace/build/cmake_install.cmake",
+		"/home/misi/work/my/ytrace/build/_deps/fmt-build/cmake_install.cmake",
+		"/home/misi/work/my/ytrace/build/_deps/spdlog-build/cmake_install.cmake",
+		"/home/misi/work/my/ytrace/build/examples/cmake_install.cmake",
+		"/home/misi/work/my/ytrace/build/src/ytrace/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

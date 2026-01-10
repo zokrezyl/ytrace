@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/misi/work/my/ytrace/build/_deps/fmt-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
