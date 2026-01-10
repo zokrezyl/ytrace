@@ -61,6 +61,23 @@ public:
         return result;
     }
     
+    static std::pair<std::string, std::string> get_exec_name_and_path() {
+#ifndef _WIN32
+        char path[4096] = {0};
+        ssize_t len = readlink("/proc/self/exe", path, sizeof(path) - 1);
+        if (len > 0) {
+            path[len] = '\0';
+            std::string exec_path(path);
+            // Extract just the basename for exec_name
+            size_t pos = exec_path.find_last_of('/');
+            std::string exec_name = (pos != std::string::npos) ? 
+                exec_path.substr(pos + 1) : exec_path;
+            return {exec_name, exec_path};
+        }
+#endif
+        return {"ytrace", ""};  // Fallback if readlink fails
+    }
+    
     static std::string get_config_file(const std::string& exec_name, const std::string& exec_path) {
 #ifndef _WIN32
         const char* home = std::getenv("HOME");
@@ -69,8 +86,14 @@ public:
         std::string cache_dir = std::string(home) + "/.cache/ytrace";
         std::filesystem::create_directories(cache_dir);
         
+        // Strip "ytrace_" prefix from config filename if present
+        std::string config_name = exec_name;
+        if (config_name.substr(0, 7) == "ytrace_") {
+            config_name = config_name.substr(7);
+        }
+        
         std::string path_hash = compute_path_hash(exec_path);
-        return cache_dir + "/" + exec_name + "-" + path_hash + ".config";
+        return cache_dir + "/" + config_name + "-" + path_hash + ".config";
 #else
         return "";  // Not supported on Windows
 #endif
@@ -228,9 +251,26 @@ public:
 
 private:
     TraceManager() : control_thread_started_(false), running_(false), server_fd_(-1) {
-        // Generate socket path based on PID
+        // Auto-detect executable name and path from /proc/self/exe
+        auto [exec_name, exec_path] = ConfigPersistence::get_exec_name_and_path();
+        exec_name_ = exec_name;
+        exec_path_ = exec_path;
+        
+        // Also init config file right away
+        config_file_ = ConfigPersistence::get_config_file(exec_name_, exec_path_);
+        
+        // Generate socket path with actual exec info
+        generate_socket_path();
+    }
+    
+    void generate_socket_path() {
         std::ostringstream oss;
-        oss << "/tmp/ytrace." << getpid() << ".sock";
+        oss << "/tmp/ytrace." << exec_name_ << "." << getpid();
+        if (!exec_path_.empty()) {
+            std::string path_hash = ConfigPersistence::compute_path_hash(exec_path_);
+            oss << "." << path_hash;
+        }
+        oss << ".sock";
         socket_path_ = oss.str();
     }
 
@@ -433,6 +473,8 @@ private:
     int server_fd_;
     std::string socket_path_;
     std::string config_file_;
+    std::string exec_name_;
+    std::string exec_path_;
     
     void save_config() {
 #ifndef _WIN32
@@ -450,15 +492,7 @@ private:
 #endif
     }
     
-    void init_config(const std::string& exec_name, const std::string& exec_path) {
-        config_file_ = ConfigPersistence::get_config_file(exec_name, exec_path);
-    }
-    
 public:
-    // Call this early to enable config persistence
-    static void enable_config_persistence(const std::string& exec_name, const std::string& exec_path) {
-        instance().init_config(exec_name, exec_path);
-    }
 };
 
 namespace detail {
