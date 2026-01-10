@@ -12,7 +12,7 @@ project(ytrace
 )
 
 # Include CPM for dependency management (only if not already included by parent)
-if(NOT DEFINED CPM_INCLUDED)
+if(NOT DEFINED CPM_VERSION)
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CPM.cmake)
 endif()
 
@@ -120,8 +120,15 @@ else()
 endif()
 
 # Optional: Build examples and tools
-option(YTRACE_BUILD_EXAMPLES "Build ytrace examples" ON)
-option(YTRACE_BUILD_TOOLS "Build ytrace-ctl tool" ON)
+# Default ON only if ytrace is the top-level project (not a subdirectory)
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    set(YTRACE_DEFAULT_BUILD ON)
+else()
+    set(YTRACE_DEFAULT_BUILD OFF)
+endif()
+
+option(YTRACE_BUILD_EXAMPLES "Build ytrace examples" ${YTRACE_DEFAULT_BUILD})
+option(YTRACE_BUILD_TOOLS "Build ytrace-ctl tool" ${YTRACE_DEFAULT_BUILD})
 
 if(YTRACE_BUILD_EXAMPLES)
     add_subdirectory(examples)
