@@ -20,8 +20,18 @@ struct TracePoint {
     bool enabled;
 };
 
+// Forward declarations
+std::vector<std::string> find_all_sockets();
+int extract_pid_from_socket(const std::string& socket_path);
+
 std::string find_socket_by_pid(int pid) {
-    return "/tmp/ytrace." + std::to_string(pid) + ".sock";
+    std::vector<std::string> sockets = find_all_sockets();
+    for (const auto& socket : sockets) {
+        if (extract_pid_from_socket(socket) == pid) {
+            return socket;
+        }
+    }
+    return "";  // Not found
 }
 
 std::vector<std::string> find_all_sockets() {
@@ -40,13 +50,35 @@ std::vector<std::string> find_all_sockets() {
     return sockets;
 }
 
-// Extract PID from socket path "/tmp/ytrace.12345.sock"
+// Extract PID from socket path "/tmp/ytrace.<exec-name>.<pid>.<path-hash>.sock"
 int extract_pid_from_socket(const std::string& socket_path) {
-    size_t start = socket_path.find("ytrace.") + 7;
+    // Format: /tmp/ytrace.<exec-name>.<pid>.<path-hash>.sock
+    // Find "ytrace." prefix, skip past it
+    size_t prefix_pos = socket_path.find("/tmp/ytrace.");
+    if (prefix_pos == std::string::npos) return -1;
+    
+    // Start after "/tmp/ytrace."
+    size_t start = prefix_pos + 12;  // strlen("/tmp/ytrace.")
     size_t end = socket_path.find(".sock");
-    if (start == std::string::npos || end == std::string::npos) return -1;
+    if (start >= socket_path.length() || end == std::string::npos) return -1;
+    
+    std::string middle = socket_path.substr(start, end - start);
+    // middle is now: "ytrace_complex.2666162.77p2g2sl5unw20000000"
+    // We need the PID which is the second segment (between first and second dot)
+    
+    size_t first_dot = middle.find('.');
+    if (first_dot == std::string::npos) return -1;
+    
+    size_t second_dot = middle.find('.', first_dot + 1);
+    std::string pid_str;
+    if (second_dot != std::string::npos) {
+        pid_str = middle.substr(first_dot + 1, second_dot - first_dot - 1);
+    } else {
+        pid_str = middle.substr(first_dot + 1);
+    }
+    
     try {
-        return std::stoi(socket_path.substr(start, end - start));
+        return std::stoi(pid_str);
     } catch (...) {
         return -1;
     }
