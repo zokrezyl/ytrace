@@ -41,13 +41,23 @@ struct TracePointInfo;
 // Config persistence utility
 class ConfigPersistence {
 public:
+    // Stored config entry (loaded from file, used to restore state on registration)
+    struct ConfigEntry {
+        bool enabled;
+        std::string file;
+        int line;
+        std::string function;
+        std::string level;
+        std::string message;
+    };
+
     static std::string compute_path_hash(const std::string& path) {
         // Simple hash: sum bytes and convert to base36-like (digits + lowercase)
         unsigned long hash = 5381;
         for (char c : path) {
             hash = ((hash << 5) + hash) ^ (unsigned char)c;
         }
-        
+
         // Convert to base36 (0-9, a-z) - 20 chars
         std::string result;
         for (int i = 0; i < 20; ++i) {
@@ -60,7 +70,7 @@ public:
         }
         return result;
     }
-    
+
     static std::pair<std::string, std::string> get_exec_name_and_path() {
 #ifndef _WIN32
         char path[4096] = {0};
@@ -70,37 +80,42 @@ public:
             std::string exec_path(path);
             // Extract just the basename for exec_name
             size_t pos = exec_path.find_last_of('/');
-            std::string exec_name = (pos != std::string::npos) ? 
+            std::string exec_name = (pos != std::string::npos) ?
                 exec_path.substr(pos + 1) : exec_path;
             return {exec_name, exec_path};
         }
 #endif
         return {"ytrace", ""};  // Fallback if readlink fails
     }
-    
+
     static std::string get_config_file(const std::string& exec_name, const std::string& exec_path) {
 #ifndef _WIN32
         const char* home = std::getenv("HOME");
         if (!home) home = "/tmp";
-        
+
         std::string cache_dir = std::string(home) + "/.cache/ytrace";
         std::filesystem::create_directories(cache_dir);
-        
+
         // Strip "ytrace_" prefix from config filename if present
         std::string config_name = exec_name;
         if (config_name.substr(0, 7) == "ytrace_") {
             config_name = config_name.substr(7);
         }
-        
+
         std::string path_hash = compute_path_hash(exec_path);
         return cache_dir + "/" + config_name + "-" + path_hash + ".config";
 #else
         return "";  // Not supported on Windows
 #endif
     }
-    
+
     static void save_state(const std::string& config_file, const std::vector<TracePointInfo>& points);
-    static void load_state(const std::string& config_file, std::vector<TracePointInfo>& points);
+
+    // Load config entries from file (call once at startup)
+    static std::vector<ConfigEntry> load_config_entries(const std::string& config_file);
+
+    // Apply saved state to a trace point (call on each registration)
+    static bool apply_saved_state(const std::vector<ConfigEntry>& entries, TracePointInfo& point);
 };
 
 // Info stored for each trace point
@@ -131,11 +146,13 @@ public:
                               const char* level, const char* message) {
         std::lock_guard<std::mutex> lock(mutex_);
         trace_points_.push_back(TracePointInfo{enabled, file, line, function, level, message});
-        
+
+        // Apply saved state to this newly registered trace point
+        ConfigPersistence::apply_saved_state(saved_config_, trace_points_.back());
+
         // Start control thread on first registration
         if (!control_thread_started_) {
             control_thread_started_ = true;
-            load_config();  // Load saved state on first registration
             start_control_thread();
         }
     }
@@ -255,10 +272,11 @@ private:
         auto [exec_name, exec_path] = ConfigPersistence::get_exec_name_and_path();
         exec_name_ = exec_name;
         exec_path_ = exec_path;
-        
-        // Also init config file right away
+
+        // Init config file path and load saved config entries
         config_file_ = ConfigPersistence::get_config_file(exec_name_, exec_path_);
-        
+        saved_config_ = ConfigPersistence::load_config_entries(config_file_);
+
         // Generate socket path with actual exec info
         generate_socket_path();
     }
@@ -467,6 +485,7 @@ private:
 
     std::mutex mutex_;
     std::vector<TracePointInfo> trace_points_;
+    std::vector<ConfigPersistence::ConfigEntry> saved_config_;  // Loaded at startup
     bool control_thread_started_;
     std::atomic<bool> running_;
     std::thread control_thread_;
@@ -475,7 +494,7 @@ private:
     std::string config_file_;
     std::string exec_name_;
     std::string exec_path_;
-    
+
     void save_config() {
 #ifndef _WIN32
         if (!config_file_.empty()) {
@@ -483,15 +502,7 @@ private:
         }
 #endif
     }
-    
-    void load_config() {
-#ifndef _WIN32
-        if (!config_file_.empty()) {
-            ConfigPersistence::load_state(config_file_, trace_points_);
-        }
-#endif
-    }
-    
+
 public:
 };
 
@@ -591,23 +602,22 @@ namespace ytrace {
 #endif
     }
     
-    inline void ConfigPersistence::load_state(const std::string& config_file, std::vector<TracePointInfo>& points) {
+    inline std::vector<ConfigPersistence::ConfigEntry> ConfigPersistence::load_config_entries(const std::string& config_file) {
+        std::vector<ConfigEntry> entries;
 #ifndef _WIN32
         std::ifstream file(config_file);
-        if (!file) return;
-        
+        if (!file) return entries;
+
         std::string line;
-        size_t idx = 0;
-        
-        while (std::getline(file, line) && idx < points.size()) {
+        while (std::getline(file, line)) {
             if (line.empty()) continue;
-            
+
             // Parse: "0/1 file line function level message"
             std::istringstream iss(line);
             int enabled_int = 0;
             int line_num = 0;
             std::string file_path, func, level, msg;
-            
+
             if (iss >> enabled_int >> file_path >> line_num >> func >> level) {
                 // Read rest of line as message
                 std::string rest;
@@ -618,19 +628,33 @@ namespace ytrace {
                         msg = msg.substr(1);
                     }
                 }
-                
-                // Verify this matches the expected trace point
-                if (file_path == points[idx].file &&
-                    line_num == points[idx].line &&
-                    func == points[idx].function &&
-                    level == points[idx].level &&
-                    msg == points[idx].message) {
-                    *points[idx].enabled = (enabled_int != 0);
-                }
+
+                entries.push_back(ConfigEntry{
+                    enabled_int != 0,
+                    file_path,
+                    line_num,
+                    func,
+                    level,
+                    msg
+                });
             }
-            idx++;
         }
 #endif
+        return entries;
+    }
+
+    inline bool ConfigPersistence::apply_saved_state(const std::vector<ConfigEntry>& entries, TracePointInfo& point) {
+        for (const auto& entry : entries) {
+            if (entry.file == point.file &&
+                entry.line == point.line &&
+                entry.function == point.function &&
+                entry.level == point.level &&
+                entry.message == point.message) {
+                *point.enabled = entry.enabled;
+                return true;
+            }
+        }
+        return false;
     }
 }
 
