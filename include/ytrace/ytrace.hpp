@@ -509,17 +509,19 @@ public:
 };
 
 namespace detail {
-    // Helper to register and return initial value
+    // Helper to register and return initial value (from saved config or default)
     inline bool register_trace_point(bool* enabled, const char* file, int line, const char* function,
                                      const char* level, const char* message) {
+        *enabled = false;  // default: disabled
         TraceManager::instance().register_trace_point(enabled, file, line, function, level, message);
-        return false;  // default: disabled
+        return *enabled;  // return the value (possibly modified by saved config)
     }
-    
+
     inline bool register_trace_point_enabled(bool* enabled, const char* file, int line, const char* function,
                                              const char* level, const char* message) {
+        *enabled = true;  // default: enabled
         TraceManager::instance().register_trace_point(enabled, file, line, function, level, message);
-        return true;  // enabled by default
+        return *enabled;  // return the value (possibly modified by saved config)
     }
 }
 
