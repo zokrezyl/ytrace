@@ -138,7 +138,9 @@ public:
 
     ~TraceManager() {
         stop_control_thread();
-        save_config();
+        // NOTE: Do NOT save_config() here! Static bools in trace points are already
+        // destroyed at this point, so reading *info.enabled would give garbage (0).
+        // Config is saved immediately on each change, so this is not needed.
     }
 
     // Register a trace point - stores pointer to the caller's static bool
