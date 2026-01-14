@@ -1,5 +1,13 @@
 #pragma once
 
+// Master switch to completely disable ytrace (default: enabled)
+// Set YTRACE_ENABLED=0 to disable all tracing (useful for Emscripten/WASM builds)
+#ifndef YTRACE_ENABLED
+#define YTRACE_ENABLED 1
+#endif
+
+#if YTRACE_ENABLED
+
 #include <string>
 #include <vector>
 #include <mutex>
@@ -662,7 +670,10 @@ namespace ytrace {
     }
 }
 
-// Compile-time switches for each macro (default: enabled)
+#endif // YTRACE_ENABLED
+
+// Compile-time switches for each macro (default: enabled, but only if YTRACE_ENABLED)
+#if YTRACE_ENABLED
 #ifndef YTRACE_ENABLE_YLOG
 #define YTRACE_ENABLE_YLOG 1
 #endif
@@ -685,6 +696,15 @@ namespace ytrace {
 
 #ifndef YTRACE_ENABLE_YFUNC
 #define YTRACE_ENABLE_YFUNC 1
+#endif
+#else
+// YTRACE_ENABLED=0: disable all macros
+#define YTRACE_ENABLE_YLOG 0
+#define YTRACE_ENABLE_YTRACE 0
+#define YTRACE_ENABLE_YDEBUG 0
+#define YTRACE_ENABLE_YINFO 0
+#define YTRACE_ENABLE_YWARN 0
+#define YTRACE_ENABLE_YFUNC 0
 #endif
 
 // Macros with compile-time format strings for spdlog
@@ -802,6 +822,7 @@ namespace ytrace {
 #endif
 
 // Convenience macros for manager access
+#if YTRACE_ENABLED
 #define yenable_all()          ytrace::TraceManager::instance().set_all_enabled(true)
 #define ydisable_all()         ytrace::TraceManager::instance().set_all_enabled(false)
 #define yenable_file(file)     ytrace::TraceManager::instance().set_file_enabled(file, true)
@@ -810,3 +831,13 @@ namespace ytrace {
 #define ydisable_func(func)    ytrace::TraceManager::instance().set_function_enabled(func, false)
 #define yenable_level(lvl)     ytrace::TraceManager::instance().set_level_enabled(lvl, true)
 #define ydisable_level(lvl)    ytrace::TraceManager::instance().set_level_enabled(lvl, false)
+#else
+#define yenable_all()          do {} while(0)
+#define ydisable_all()         do {} while(0)
+#define yenable_file(file)     do {} while(0)
+#define ydisable_file(file)    do {} while(0)
+#define yenable_func(func)     do {} while(0)
+#define ydisable_func(func)    do {} while(0)
+#define yenable_level(lvl)     do {} while(0)
+#define ydisable_level(lvl)    do {} while(0)
+#endif
