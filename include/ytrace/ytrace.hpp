@@ -512,7 +512,7 @@ namespace detail {
     // Helper to register and return initial value (from saved config or default)
     inline bool register_trace_point(bool* enabled, const char* file, int line, const char* function,
                                      const char* level, const char* message) {
-        *enabled = false;  // default: disabled
+        *enabled = true;  // default: enabled (trace points without config entry are enabled)
         TraceManager::instance().register_trace_point(enabled, file, line, function, level, message);
         return *enabled;  // return the value (possibly modified by saved config)
     }
