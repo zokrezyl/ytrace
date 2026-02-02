@@ -19,6 +19,9 @@
 #include <cstring>
 #include <sstream>
 #include <optional>
+#include <chrono>
+#include <unordered_map>
+#include <cinttypes>
 
 // Formatting backend selection (compile-time flag)
 // - YTRACE_USE_SPDLOG: Use spdlog for logging (requires spdlog)
@@ -522,7 +525,7 @@ namespace detail {
         static const bool default_on = []() {
             const char* val = std::getenv("YTRACE_DEFAULT_ON");
             if (!val) return false;
-            return std::string_view(val) == "1" || std::string_view(val) == "yes";
+            return std::string_view(val) == "1" || std::string_view(val) == "yes" || std::string_view(val) == "true";
         }();
         return default_on;
     }
@@ -542,6 +545,71 @@ namespace detail {
         return *enabled;  // return the value (possibly modified by saved config)
     }
 }
+
+// Adaptive time unit formatting
+inline std::string format_duration(double ns) {
+    char buf[64];
+    if (ns < 1000.0) {
+        std::snprintf(buf, sizeof(buf), "%.1f ns", ns);
+    } else if (ns < 1000000.0) {
+        std::snprintf(buf, sizeof(buf), "%.1f us", ns / 1000.0);
+    } else if (ns < 1000000000.0) {
+        std::snprintf(buf, sizeof(buf), "%.1f ms", ns / 1000000.0);
+    } else {
+        std::snprintf(buf, sizeof(buf), "%.3f s", ns / 1000000000.0);
+    }
+    return buf;
+}
+
+// Per-label timer statistics
+struct TimerStats {
+    uint64_t count = 0;
+    double avg = 0.0;
+    double min = 0.0;
+    double max = 0.0;
+};
+
+// Singleton manager that collects timer statistics and prints summary on exit
+class TimerManager {
+public:
+    static TimerManager& instance() {
+        static TimerManager mgr;
+        return mgr;
+    }
+
+    void record(const std::string& label, double duration_ns) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        auto& s = stats_[label];
+        s.count++;
+        if (s.count == 1) {
+            s.avg = duration_ns;
+            s.min = duration_ns;
+            s.max = duration_ns;
+        } else {
+            s.avg += (duration_ns - s.avg) / static_cast<double>(s.count);
+            if (duration_ns < s.min) s.min = duration_ns;
+            if (duration_ns > s.max) s.max = duration_ns;
+        }
+    }
+
+    ~TimerManager() {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if (stats_.empty()) return;
+        std::fprintf(stderr, "\n[ytrace] Timer summary:\n");
+        for (const auto& [label, s] : stats_) {
+            std::fprintf(stderr, "  %-40s  count=%" PRIu64 "  avg=%s  min=%s  max=%s\n",
+                label.c_str(), s.count,
+                format_duration(s.avg).c_str(),
+                format_duration(s.min).c_str(),
+                format_duration(s.max).c_str());
+        }
+    }
+
+private:
+    TimerManager() = default;
+    std::mutex mutex_;
+    std::unordered_map<std::string, TimerStats> stats_;
+};
 
 // Default output handler (now includes level)
 inline void default_trace_handler(const char* level, const char* file, int line, const char* function, const char* msg) {
@@ -601,6 +669,39 @@ private:
     const char* file_;
     int line_;
     const char* function_;
+};
+
+// RAII scope timer for measuring elapsed time
+class ScopeTimer {
+public:
+    ScopeTimer(const char* label, const char* file, int line, const char* function)
+        : label_(label), file_(file), line_(line), function_(function),
+          start_(std::chrono::steady_clock::now()) {
+        char buf[256];
+        std::snprintf(buf, sizeof(buf), "%s started", label_);
+        trace_handler()("timer-entry", file_, line_, function_, buf);
+    }
+
+    ~ScopeTimer() {
+        auto end = std::chrono::steady_clock::now();
+        double elapsed_ns = static_cast<double>(
+            std::chrono::duration_cast<std::chrono::nanoseconds>(end - start_).count());
+        std::string dur = format_duration(elapsed_ns);
+        char buf[256];
+        std::snprintf(buf, sizeof(buf), "%s elapsed: %s", label_, dur.c_str());
+        trace_handler()("timer-exit", file_, line_, function_, buf);
+
+        // Build key: file:line:function or just label
+        std::string key = std::string(file_) + ":" + std::to_string(line_) + " " + label_;
+        TimerManager::instance().record(key, elapsed_ns);
+    }
+
+private:
+    const char* label_;
+    const char* file_;
+    int line_;
+    const char* function_;
+    std::chrono::steady_clock::time_point start_;
 };
 
 } // namespace ytrace
@@ -707,6 +808,10 @@ namespace ytrace {
 #ifndef YTRACE_ENABLE_YFUNC
 #define YTRACE_ENABLE_YFUNC 1
 #endif
+
+#ifndef YTRACE_ENABLE_YTIMEIT
+#define YTRACE_ENABLE_YTIMEIT 1
+#endif
 #else
 // YTRACE_ENABLED=0: disable all macros
 #define YTRACE_ENABLE_YLOG 0
@@ -715,6 +820,7 @@ namespace ytrace {
 #define YTRACE_ENABLE_YINFO 0
 #define YTRACE_ENABLE_YWARN 0
 #define YTRACE_ENABLE_YFUNC 0
+#define YTRACE_ENABLE_YTIMEIT 0
 #endif
 
 // Macros with compile-time format strings for spdlog
@@ -829,6 +935,22 @@ namespace ytrace {
     if (_ytrace_entry_enabled_) _ytrace_scope_guard_.emplace(&_ytrace_exit_enabled_, __FILE__, __LINE__, __func__)
 #else
 #define yfunc() do {} while(0)
+#endif
+
+// ytime() - scope timer macro (optional label argument)
+#if YTRACE_ENABLE_YTIMEIT
+#define YTIMEIT_IMPL(label) \
+    static bool _ytrace_timer_entry_enabled_ = ytrace::detail::register_trace_point(&_ytrace_timer_entry_enabled_, __FILE__, __LINE__, __func__, "timer-entry", label); \
+    static bool _ytrace_timer_exit_enabled_ = ytrace::detail::register_trace_point(&_ytrace_timer_exit_enabled_, __FILE__, __LINE__, __func__, "timer-exit", label); \
+    std::optional<ytrace::ScopeTimer> _ytrace_timer_guard_; \
+    if (_ytrace_timer_entry_enabled_) _ytrace_timer_guard_.emplace(label, __FILE__, __LINE__, __func__)
+
+// Dispatch: ytime() uses __func__, ytime("label") uses the given label
+#define YTIMEIT_NOLABEL() YTIMEIT_IMPL(__func__)
+#define YTIMEIT_GET_MACRO(_0, _1, NAME, ...) NAME
+#define ytimeit(...) YTIMEIT_GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, YTIMEIT_IMPL, YTIMEIT_NOLABEL)(__VA_ARGS__)
+#else
+#define ytimeit(...) do {} while(0)
 #endif
 
 // Convenience macros for manager access

@@ -3,6 +3,7 @@
 #include <iostream>
 
 void process_data(int value) {
+    ytimeit("process_data"); // scope timer with explicit label
     yfunc();
     ytrace("processing value: %d", value);
     
@@ -12,6 +13,7 @@ void process_data(int value) {
 }
 
 void initialize() {
+    ytimeit(); // scope timer using __func__ as label
     yfunc();
     yinfo("initialization started");
     ytrace("loading config");
