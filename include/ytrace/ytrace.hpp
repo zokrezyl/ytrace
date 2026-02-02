@@ -517,17 +517,27 @@ public:
 };
 
 namespace detail {
+    // Check YTRACE_DEFAULT_ON env var: if not set or not "1"/"yes", default is off
+    inline bool get_default_enabled() {
+        static const bool default_on = []() {
+            const char* val = std::getenv("YTRACE_DEFAULT_ON");
+            if (!val) return false;
+            return std::string_view(val) == "1" || std::string_view(val) == "yes";
+        }();
+        return default_on;
+    }
+
     // Helper to register and return initial value (from saved config or default)
     inline bool register_trace_point(bool* enabled, const char* file, int line, const char* function,
                                      const char* level, const char* message) {
-        *enabled = true;  // default: enabled (trace points without config entry are enabled)
+        *enabled = get_default_enabled();
         TraceManager::instance().register_trace_point(enabled, file, line, function, level, message);
         return *enabled;  // return the value (possibly modified by saved config)
     }
 
     inline bool register_trace_point_enabled(bool* enabled, const char* file, int line, const char* function,
                                              const char* level, const char* message) {
-        *enabled = true;  // default: enabled
+        *enabled = get_default_enabled();
         TraceManager::instance().register_trace_point(enabled, file, line, function, level, message);
         return *enabled;  // return the value (possibly modified by saved config)
     }
