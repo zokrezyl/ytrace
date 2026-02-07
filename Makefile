@@ -15,7 +15,7 @@ BUILD_DIR := build
 EXAMPLES_DIR := examples
 SRC_DIR := src
 
-EXAMPLES := basic custom_handler socket_control
+EXAMPLES := basic custom_handler socket_control timers
 EXAMPLE_TARGETS := $(addprefix $(BUILD_DIR)/,$(EXAMPLES))
 
 # Complex example sources

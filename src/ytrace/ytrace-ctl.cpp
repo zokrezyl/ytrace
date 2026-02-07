@@ -325,6 +325,7 @@ int main(int argc, char* argv[]) {
     args::Command disable_cmd(commands, "disable", "Disable trace points matching filters");
     args::Command ps_cmd(commands, "ps", "List live ytrace processes");
     args::Command discover_cmd(commands, "discover", "Discover ytrace sockets (including stale)");
+    args::Command timers_cmd(commands, "timers", "Show timer statistics");
     
     parser.RequireCommand(false);
 
@@ -368,7 +369,7 @@ int main(int argc, char* argv[]) {
     }
 
     // No command specified - show help
-    if (!list_cmd && !enable_cmd && !disable_cmd) {
+    if (!list_cmd && !enable_cmd && !disable_cmd && !timers_cmd) {
         std::cout << parser;
         return 0;
     }
@@ -401,6 +402,17 @@ int main(int argc, char* argv[]) {
     std::vector<int> line_nums = args::get(line_flag);
     std::vector<std::string> level_patterns = args::get(level_flag);
     std::vector<std::string> msg_patterns = args::get(msg_flag);
+
+    // Timers command - fetch timer statistics
+    if (timers_cmd) {
+        std::string response = send_command(socket_path, "timers");
+        if (response.rfind("ERROR", 0) == 0) {
+            std::cerr << response;
+            return 1;
+        }
+        std::cout << response;
+        return 0;
+    }
 
     // List command - fetch and optionally filter
     if (list_cmd) {

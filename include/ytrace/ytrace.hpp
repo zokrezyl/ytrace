@@ -139,6 +139,81 @@ struct TracePointInfo {
     const char* message;    // format string
 };
 
+// Adaptive time unit formatting
+inline std::string format_duration(double ns) {
+    char buf[64];
+    if (ns < 1000.0) {
+        std::snprintf(buf, sizeof(buf), "%.1f ns", ns);
+    } else if (ns < 1000000.0) {
+        std::snprintf(buf, sizeof(buf), "%.1f us", ns / 1000.0);
+    } else if (ns < 1000000000.0) {
+        std::snprintf(buf, sizeof(buf), "%.1f ms", ns / 1000000.0);
+    } else {
+        std::snprintf(buf, sizeof(buf), "%.3f s", ns / 1000000000.0);
+    }
+    return buf;
+}
+
+// Per-label timer statistics
+struct TimerStats {
+    uint64_t count = 0;
+    double avg = 0.0;
+    double min = 0.0;
+    double max = 0.0;
+};
+
+// Singleton manager that collects timer statistics and prints summary on exit
+class TimerManager {
+public:
+    static TimerManager& instance() {
+        static TimerManager mgr;
+        return mgr;
+    }
+
+    void record(const std::string& label, double duration_ns) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        auto& s = stats_[label];
+        s.count++;
+        if (s.count == 1) {
+            s.avg = duration_ns;
+            s.min = duration_ns;
+            s.max = duration_ns;
+        } else {
+            s.avg += (duration_ns - s.avg) / static_cast<double>(s.count);
+            if (duration_ns < s.min) s.min = duration_ns;
+            if (duration_ns > s.max) s.max = duration_ns;
+        }
+    }
+
+    std::string summary() {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if (stats_.empty()) return "";
+        std::ostringstream oss;
+        for (const auto& [label, s] : stats_) {
+            char line[256];
+            std::snprintf(line, sizeof(line), "  %-40s  count=%" PRIu64 "  avg=%s  min=%s  max=%s\n",
+                label.c_str(), s.count,
+                format_duration(s.avg).c_str(),
+                format_duration(s.min).c_str(),
+                format_duration(s.max).c_str());
+            oss << line;
+        }
+        return oss.str();
+    }
+
+    ~TimerManager() {
+        auto s = summary();
+        if (!s.empty()) {
+            std::fprintf(stderr, "\n[ytrace] Timer summary:\n%s", s.c_str());
+        }
+    }
+
+private:
+    TimerManager() = default;
+    std::mutex mutex_;
+    std::unordered_map<std::string, TimerStats> stats_;
+};
+
 // Singleton manager for all trace points
 class TraceManager {
 public:
@@ -420,6 +495,11 @@ private:
         else if (command.rfind("disable ", 0) == 0 || command.rfind("d ", 0) == 0) {
             return process_batch_command(command, false);
         }
+        else if (command == "timers" || command == "t") {
+            auto s = TimerManager::instance().summary();
+            if (s.empty()) return "No timer data recorded.\n";
+            return "Timer summary:\n" + s;
+        }
         else if (command == "help" || command == "h" || command == "?") {
             return "Commands:\n"
                    "  list (l)           - List all trace points\n"
@@ -427,6 +507,7 @@ private:
                    "  disable all (da)   - Disable all trace points\n"
                    "  enable <specs>     - Enable trace points (file:line:func:level:msg ...)\n"
                    "  disable <specs>    - Disable trace points (file:line:func:level:msg ...)\n"
+                   "  timers (t)         - Show timer statistics\n"
                    "  help (h, ?)        - Show this help\n";
         }
         
@@ -545,71 +626,6 @@ namespace detail {
         return *enabled;  // return the value (possibly modified by saved config)
     }
 }
-
-// Adaptive time unit formatting
-inline std::string format_duration(double ns) {
-    char buf[64];
-    if (ns < 1000.0) {
-        std::snprintf(buf, sizeof(buf), "%.1f ns", ns);
-    } else if (ns < 1000000.0) {
-        std::snprintf(buf, sizeof(buf), "%.1f us", ns / 1000.0);
-    } else if (ns < 1000000000.0) {
-        std::snprintf(buf, sizeof(buf), "%.1f ms", ns / 1000000.0);
-    } else {
-        std::snprintf(buf, sizeof(buf), "%.3f s", ns / 1000000000.0);
-    }
-    return buf;
-}
-
-// Per-label timer statistics
-struct TimerStats {
-    uint64_t count = 0;
-    double avg = 0.0;
-    double min = 0.0;
-    double max = 0.0;
-};
-
-// Singleton manager that collects timer statistics and prints summary on exit
-class TimerManager {
-public:
-    static TimerManager& instance() {
-        static TimerManager mgr;
-        return mgr;
-    }
-
-    void record(const std::string& label, double duration_ns) {
-        std::lock_guard<std::mutex> lock(mutex_);
-        auto& s = stats_[label];
-        s.count++;
-        if (s.count == 1) {
-            s.avg = duration_ns;
-            s.min = duration_ns;
-            s.max = duration_ns;
-        } else {
-            s.avg += (duration_ns - s.avg) / static_cast<double>(s.count);
-            if (duration_ns < s.min) s.min = duration_ns;
-            if (duration_ns > s.max) s.max = duration_ns;
-        }
-    }
-
-    ~TimerManager() {
-        std::lock_guard<std::mutex> lock(mutex_);
-        if (stats_.empty()) return;
-        std::fprintf(stderr, "\n[ytrace] Timer summary:\n");
-        for (const auto& [label, s] : stats_) {
-            std::fprintf(stderr, "  %-40s  count=%" PRIu64 "  avg=%s  min=%s  max=%s\n",
-                label.c_str(), s.count,
-                format_duration(s.avg).c_str(),
-                format_duration(s.min).c_str(),
-                format_duration(s.max).c_str());
-        }
-    }
-
-private:
-    TimerManager() = default;
-    std::mutex mutex_;
-    std::unordered_map<std::string, TimerStats> stats_;
-};
 
 // Default output handler (now includes level)
 inline void default_trace_handler(const char* level, const char* file, int line, const char* function, const char* msg) {
