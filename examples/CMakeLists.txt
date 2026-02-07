@@ -15,3 +15,6 @@ add_executable(ytrace_complex
 )
 target_include_directories(ytrace_complex PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/complex)
 target_link_libraries(ytrace_complex PRIVATE ytrace::ytrace)
+
+add_executable(ytrace_timers timers.cpp)
+target_link_libraries(ytrace_timers PRIVATE ytrace::ytrace)

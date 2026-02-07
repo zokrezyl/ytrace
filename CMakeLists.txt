@@ -136,6 +136,7 @@ endif()
 
 option(YTRACE_BUILD_EXAMPLES "Build ytrace examples" ${YTRACE_DEFAULT_BUILD})
 option(YTRACE_BUILD_TOOLS "Build ytrace-ctl tool" ${YTRACE_DEFAULT_BUILD})
+option(YTRACE_BUILD_TESTS "Build ytrace tests" ${YTRACE_DEFAULT_BUILD})
 
 if(YTRACE_BUILD_EXAMPLES)
     add_subdirectory(examples)
@@ -143,6 +144,11 @@ endif()
 
 if(YTRACE_BUILD_TOOLS)
     add_subdirectory(src/ytrace)
+endif()
+
+if(YTRACE_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
 endif()
 
 # Install configuration (minimal for header-only lib)
