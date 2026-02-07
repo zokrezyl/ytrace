@@ -18,10 +18,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Configure CMake
-        run: cmake -B build -DYTRACE_WITH_SPDLOG=OFF
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DYTRACE_WITH_SPDLOG=OFF
 
       - name: Build
-        run: cmake --build build
+        run: cmake --build build --config Release
 
       - name: Run tests
-        run: ctest --test-dir build --output-on-failure
+        run: ctest --test-dir build --output-on-failure -C Release

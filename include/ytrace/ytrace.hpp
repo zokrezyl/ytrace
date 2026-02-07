@@ -34,15 +34,19 @@
 
 #ifdef _WIN32
 #include <winsock2.h>
-#include <ws2tcpip.h>
+#include <afunix.h>
+#include <process.h>
+#include <io.h>
 #pragma comment(lib, "ws2_32.lib")
+#define getpid _getpid
+#define unlink _unlink
 #else
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
+#endif
 #include <fstream>
 #include <filesystem>
-#endif
 
 namespace ytrace {
 
@@ -371,7 +375,14 @@ private:
     
     void generate_socket_path() {
         std::ostringstream oss;
+#ifdef _WIN32
+        const char* temp = std::getenv("TEMP");
+        if (!temp) temp = std::getenv("TMP");
+        if (!temp) temp = "C:\\Windows\\Temp";
+        oss << temp << "\\ytrace." << exec_name_ << "." << getpid();
+#else
         oss << "/tmp/ytrace." << exec_name_ << "." << getpid();
+#endif
         if (!exec_path_.empty()) {
             std::string path_hash = ConfigPersistence::compute_path_hash(exec_path_);
             oss << "." << path_hash;
@@ -398,11 +409,19 @@ private:
         if (control_thread_.joinable()) {
             control_thread_.join();
         }
-        unlink(socket_path_.c_str());
+        if (!socket_path_.empty()) {
+            unlink(socket_path_.c_str());
+        }
     }
 
     void control_loop() {
-#ifndef _WIN32
+#ifdef _WIN32
+        WSADATA wsa;
+        if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
+            std::fprintf(stderr, "[ytrace] WSAStartup failed\n");
+            return;
+        }
+#endif
         server_fd_ = socket(AF_UNIX, SOCK_STREAM, 0);
         if (server_fd_ < 0) {
             std::fprintf(stderr, "[ytrace] Failed to create socket\n");
@@ -419,14 +438,22 @@ private:
 
         if (bind(server_fd_, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
             std::fprintf(stderr, "[ytrace] Failed to bind socket: %s\n", socket_path_.c_str());
+#ifdef _WIN32
+            closesocket(server_fd_);
+#else
             close(server_fd_);
+#endif
             server_fd_ = -1;
             return;
         }
 
         if (listen(server_fd_, 5) < 0) {
             std::fprintf(stderr, "[ytrace] Failed to listen on socket\n");
+#ifdef _WIN32
+            closesocket(server_fd_);
+#else
             close(server_fd_);
+#endif
             server_fd_ = -1;
             return;
         }
@@ -445,12 +472,18 @@ private:
             int ret = select(server_fd_ + 1, &readfds, nullptr, nullptr, &tv);
             if (ret <= 0) continue;
 
-            int client_fd = accept(server_fd_, nullptr, nullptr);
+            int client_fd = static_cast<int>(accept(server_fd_, nullptr, nullptr));
             if (client_fd < 0) continue;
 
             handle_client(client_fd);
+#ifdef _WIN32
+            closesocket(client_fd);
+#else
             close(client_fd);
+#endif
         }
+#ifdef _WIN32
+        WSACleanup();
 #endif
     }
 
@@ -458,8 +491,12 @@ private:
         // Read full command (may be large for batch operations)
         std::string command;
         char buffer[4096];
-        ssize_t n;
-        while ((n = read(client_fd, buffer, sizeof(buffer) - 1)) > 0) {
+        int n;
+#ifdef _WIN32
+        while ((n = recv(client_fd, buffer, sizeof(buffer) - 1, 0)) > 0) {
+#else
+        while ((n = static_cast<int>(read(client_fd, buffer, sizeof(buffer) - 1))) > 0) {
+#endif
             buffer[n] = '\0';
             command += buffer;
             // Stop at newline (end of command)
@@ -471,8 +508,12 @@ private:
         if (!command.empty() && command.back() == '\n') command.pop_back();
 
         std::string response = process_command(command.c_str());
-        n = write(client_fd, response.c_str(), response.size());
-        (void)n;  // suppress unused result warning
+#ifdef _WIN32
+        send(client_fd, response.c_str(), static_cast<int>(response.size()), 0);
+#else
+        n = static_cast<int>(write(client_fd, response.c_str(), response.size()));
+        (void)n;
+#endif
     }
 
     std::string process_command(const char* cmd) {
