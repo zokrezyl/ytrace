@@ -6,10 +6,20 @@
 #include <regex>
 #include <vector>
 #include <sstream>
+#include <filesystem>
+
+#ifdef _WIN32
+#include <winsock2.h>
+#include <afunix.h>
+#include <process.h>
+#pragma comment(lib, "ws2_32.lib")
+#define getpid _getpid
+#else
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
 #include <dirent.h>
+#endif
 
 struct TracePoint {
     std::string file;
@@ -36,29 +46,37 @@ std::string find_socket_by_pid(int pid) {
 
 std::vector<std::string> find_all_sockets() {
     std::vector<std::string> sockets;
-    DIR* dir = opendir("/tmp");
-    if (!dir) return sockets;
-    
-    struct dirent* entry;
-    while ((entry = readdir(dir)) != nullptr) {
-        std::string name(entry->d_name);
-        if (name.rfind("ytrace.", 0) == 0 && name.find(".sock") != std::string::npos) {
-            sockets.push_back("/tmp/" + name);
+#ifdef _WIN32
+    const char* temp = std::getenv("TEMP");
+    if (!temp) temp = std::getenv("TMP");
+    if (!temp) temp = "C:\\Windows\\Temp";
+    std::filesystem::path temp_dir(temp);
+#else
+    std::filesystem::path temp_dir("/tmp");
+#endif
+
+    try {
+        for (const auto& entry : std::filesystem::directory_iterator(temp_dir)) {
+            std::string name = entry.path().filename().string();
+            if (name.rfind("ytrace.", 0) == 0 && name.find(".sock") != std::string::npos) {
+                sockets.push_back(entry.path().string());
+            }
         }
+    } catch (...) {
+        // Directory not accessible
     }
-    closedir(dir);
     return sockets;
 }
 
-// Extract PID from socket path "/tmp/ytrace.<exec-name>.<pid>.<path-hash>.sock"
+// Extract PID from socket path (platform-independent)
 int extract_pid_from_socket(const std::string& socket_path) {
-    // Format: /tmp/ytrace.<exec-name>.<pid>.<path-hash>.sock
+    // Format: <temp>/ytrace.<exec-name>.<pid>.<path-hash>.sock
     // Find "ytrace." prefix, skip past it
-    size_t prefix_pos = socket_path.find("/tmp/ytrace.");
+    size_t prefix_pos = socket_path.find("ytrace.");
     if (prefix_pos == std::string::npos) return -1;
-    
-    // Start after "/tmp/ytrace."
-    size_t start = prefix_pos + 12;  // strlen("/tmp/ytrace.")
+
+    // Start after "ytrace."
+    size_t start = prefix_pos + 7;  // strlen("ytrace.")
     size_t end = socket_path.find(".sock");
     if (start >= socket_path.length() || end == std::string::npos) return -1;
     
@@ -86,19 +104,33 @@ int extract_pid_from_socket(const std::string& socket_path) {
 
 // Check if a process is alive
 bool is_process_alive(int pid) {
+#ifdef _WIN32
+    HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+    if (process) {
+        CloseHandle(process);
+        return true;
+    }
+    return false;
+#else
     std::string proc_path = "/proc/" + std::to_string(pid);
     return access(proc_path.c_str(), F_OK) == 0;
+#endif
 }
 
 // Get process command line
 std::string get_process_cmdline(int pid) {
+#ifdef _WIN32
+    (void)pid;
+    return "(Windows process)";
+#else
     std::string path = "/proc/" + std::to_string(pid) + "/cmdline";
     std::ifstream file(path);
     if (!file) return "";
-    
+
     std::string cmdline;
     std::getline(file, cmdline, '\0');
     return cmdline;
+#endif
 }
 
 // Find live ytrace processes
@@ -126,8 +158,18 @@ std::vector<YtraceProcess> find_live_processes() {
 }
 
 std::string send_command(const std::string& socket_path, const std::string& command) {
-    int fd = socket(AF_UNIX, SOCK_STREAM, 0);
+#ifdef _WIN32
+    WSADATA wsa;
+    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
+        return "ERROR: WSAStartup failed";
+    }
+#endif
+
+    int fd = static_cast<int>(socket(AF_UNIX, SOCK_STREAM, 0));
     if (fd < 0) {
+#ifdef _WIN32
+        WSACleanup();
+#endif
         return "ERROR: Failed to create socket";
     }
 
@@ -137,24 +179,43 @@ std::string send_command(const std::string& socket_path, const std::string& comm
     std::strncpy(addr.sun_path, socket_path.c_str(), sizeof(addr.sun_path) - 1);
 
     if (connect(fd, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
+#ifdef _WIN32
+        closesocket(fd);
+        WSACleanup();
+#else
         close(fd);
+#endif
         return "ERROR: Failed to connect to " + socket_path;
     }
 
     // Send command
     std::string cmd_with_newline = command + "\n";
+#ifdef _WIN32
+    send(fd, cmd_with_newline.c_str(), static_cast<int>(cmd_with_newline.size()), 0);
+#else
     ssize_t n = write(fd, cmd_with_newline.c_str(), cmd_with_newline.size());
-    (void)n;  // suppress unused result warning
+    (void)n;
+#endif
 
     // Read response
     std::string response;
     char buffer[4096];
-    while ((n = read(fd, buffer, sizeof(buffer) - 1)) > 0) {
-        buffer[n] = '\0';
+    int bytes;
+#ifdef _WIN32
+    while ((bytes = recv(fd, buffer, sizeof(buffer) - 1, 0)) > 0) {
+#else
+    while ((bytes = static_cast<int>(read(fd, buffer, sizeof(buffer) - 1))) > 0) {
+#endif
+        buffer[bytes] = '\0';
         response += buffer;
     }
 
+#ifdef _WIN32
+    closesocket(fd);
+    WSACleanup();
+#else
     close(fd);
+#endif
     return response;
 }
 
