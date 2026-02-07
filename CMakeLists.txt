@@ -23,6 +23,11 @@ add_library(ytrace::ytrace ALIAS ytrace)
 # Set C++ standard
 target_compile_features(ytrace INTERFACE cxx_std_20)
 
+# MSVC requires /Zc:preprocessor for __VA_OPT__ support (C++20 conformant preprocessor)
+target_compile_options(ytrace INTERFACE
+    $<$<CXX_COMPILER_ID:MSVC>:/Zc:preprocessor>
+)
+
 # Include directories
 target_include_directories(ytrace INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
