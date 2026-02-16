@@ -891,6 +891,7 @@ private:
 } // namespace ytrace
 
 // ConfigPersistence implementation (after TracePointInfo is defined)
+#if !defined(YTRACE_NO_CONTROL_SOCKET)
 namespace ytrace {
     inline void ConfigPersistence::save_state(const std::string& config_file, const std::vector<TracePointInfo>& points) {
 #ifndef _WIN32
@@ -964,6 +965,7 @@ namespace ytrace {
         return false;
     }
 }
+#endif // !YTRACE_NO_CONTROL_SOCKET
 
 #endif // YTRACE_ENABLED
 
