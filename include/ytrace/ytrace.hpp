@@ -32,28 +32,39 @@
     #include <spdlog/sinks/stdout_color_sinks.h>
 #endif
 
-#ifdef _WIN32
-#include <winsock2.h>
-#include <afunix.h>
-#include <process.h>
-#include <io.h>
-#pragma comment(lib, "ws2_32.lib")
-#define getpid _getpid
-#define unlink _unlink
-#else
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <unistd.h>
+// Auto-detect Emscripten and disable control socket
+#if defined(__EMSCRIPTEN__)
+    #ifndef YTRACE_NO_CONTROL_SOCKET
+    #define YTRACE_NO_CONTROL_SOCKET 1
+    #endif
 #endif
-#include <fstream>
-#include <filesystem>
+
+// Control socket and config persistence (disable for Emscripten/WASM)
+#if !defined(YTRACE_NO_CONTROL_SOCKET)
+    #ifdef _WIN32
+    #include <winsock2.h>
+    #include <afunix.h>
+    #include <process.h>
+    #include <io.h>
+    #pragma comment(lib, "ws2_32.lib")
+    #define getpid _getpid
+    #define unlink _unlink
+    #else
+    #include <sys/socket.h>
+    #include <sys/un.h>
+    #include <unistd.h>
+    #endif
+    #include <fstream>
+    #include <filesystem>
+#endif
 
 namespace ytrace {
 
 // Forward declaration
 struct TracePointInfo;
 
-// Config persistence utility
+#if !defined(YTRACE_NO_CONTROL_SOCKET)
+// Config persistence utility (requires filesystem and socket APIs)
 class ConfigPersistence {
 public:
     // Stored config entry (loaded from file, used to restore state on registration)
@@ -132,6 +143,7 @@ public:
     // Apply saved state to a trace point (call on each registration)
     static bool apply_saved_state(const std::vector<ConfigEntry>& entries, TracePointInfo& point);
 };
+#endif // !YTRACE_NO_CONTROL_SOCKET
 
 // Info stored for each trace point
 struct TracePointInfo {
@@ -217,6 +229,120 @@ private:
     std::mutex mutex_;
     std::unordered_map<std::string, TimerStats> stats_;
 };
+
+#if defined(YTRACE_NO_CONTROL_SOCKET)
+// Simplified TraceManager for Emscripten/WASM (no control socket, no config persistence)
+class TraceManager {
+public:
+    static TraceManager& instance() {
+        static TraceManager mgr;
+        return mgr;
+    }
+
+    ~TraceManager() = default;
+
+    void register_trace_point(bool* enabled, const char* file, int line, const char* function,
+                              const char* level, const char* message) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        trace_points_.push_back(TracePointInfo{enabled, file, line, function, level, message});
+    }
+
+    bool set_enabled(const char* file, int line, const char* function,
+                     const char* level, const char* message, bool state) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        for (auto& info : trace_points_) {
+            if (info.line == line &&
+                std::string_view(info.file) == std::string_view(file) &&
+                std::string_view(info.function) == std::string_view(function) &&
+                std::string_view(info.level) == std::string_view(level) &&
+                std::string_view(info.message) == std::string_view(message)) {
+                *info.enabled = state;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool set_enabled_by_index(size_t index, bool state) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if (index < trace_points_.size()) {
+            *trace_points_[index].enabled = state;
+            return true;
+        }
+        return false;
+    }
+
+    void set_level_enabled(const char* level, bool state) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        std::string_view level_view(level);
+        for (auto& info : trace_points_) {
+            if (std::string_view(info.level) == level_view) {
+                *info.enabled = state;
+            }
+        }
+    }
+
+    void set_file_enabled(const char* file, bool state) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        std::string_view file_view(file);
+        for (auto& info : trace_points_) {
+            if (std::string_view(info.file) == file_view) {
+                *info.enabled = state;
+            }
+        }
+    }
+
+    void set_function_enabled(const char* function, bool state) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        std::string_view func_view(function);
+        for (auto& info : trace_points_) {
+            if (std::string_view(info.function) == func_view) {
+                *info.enabled = state;
+            }
+        }
+    }
+
+    void set_all_enabled(bool state) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        for (auto& info : trace_points_) {
+            *info.enabled = state;
+        }
+    }
+
+    size_t count() {
+        std::lock_guard<std::mutex> lock(mutex_);
+        return trace_points_.size();
+    }
+
+    void for_each(std::function<void(const TracePointInfo&)> func) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        for (const auto& info : trace_points_) {
+            func(info);
+        }
+    }
+
+    std::string list_trace_points() {
+        std::lock_guard<std::mutex> lock(mutex_);
+        std::ostringstream oss;
+        size_t idx = 0;
+        for (const auto& info : trace_points_) {
+            oss << idx++ << " " << (*info.enabled ? "[ON] " : "[OFF]") 
+                << " [" << info.level << "] "
+                << info.file << ":" << info.line 
+                << " (" << info.function << ") \"" << info.message << "\"\n";
+        }
+        return oss.str();
+    }
+
+    std::string get_socket_path() const { return ""; }
+
+private:
+    TraceManager() = default;
+    std::mutex mutex_;
+    std::vector<TracePointInfo> trace_points_;
+};
+
+#else // Full TraceManager with control socket
 
 // Singleton manager for all trace points
 class TraceManager {
@@ -640,6 +766,7 @@ private:
 
 public:
 };
+#endif // !YTRACE_NO_CONTROL_SOCKET
 
 namespace detail {
     // Check YTRACE_DEFAULT_ON env var: if not set or not "1"/"yes", default is off
