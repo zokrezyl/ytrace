@@ -584,7 +584,14 @@ private:
             return;
         }
 
-        std::fprintf(stderr, "[ytrace] Control socket: %s\n", socket_path_.c_str());
+#if YTRACE_ENABLE_YDEBUG
+#if defined(YTRACE_USE_SPDLOG)
+        spdlog::debug("[ytrace] Control socket: {}", socket_path_);
+#else
+        ytrace::detail::trace_handler()("debug", __FILE__, __LINE__, __func__, 
+            (std::string("[ytrace] Control socket: ") + socket_path_).c_str());
+#endif
+#endif
 
         while (running_) {
             fd_set readfds;
