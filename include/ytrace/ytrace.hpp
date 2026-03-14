@@ -360,6 +360,7 @@ public:
     }
 
     // Register a trace point - stores pointer to the caller's static bool
+    // Note: Control socket is NOT auto-opened. Call open_ctrl_socket() explicitly.
     void register_trace_point(bool* enabled, const char* file, int line, const char* function,
                               const char* level, const char* message) {
         std::lock_guard<std::mutex> lock(mutex_);
@@ -367,12 +368,6 @@ public:
 
         // Apply saved state to this newly registered trace point
         ConfigPersistence::apply_saved_state(saved_config_, trace_points_.back());
-
-        // Start control thread on first registration
-        if (!control_thread_started_) {
-            control_thread_started_ = true;
-            start_control_thread();
-        }
     }
 
     // Enable/disable a specific trace point (full key match)
@@ -483,6 +478,19 @@ public:
     }
 
     std::string get_socket_path() const { return socket_path_; }
+
+    // Open control socket at a specific path (disables auto-open)
+    // Open control socket at the specified path
+    // Returns false if socket is already open or path is empty
+    bool open_ctrl_socket(const char* path) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if (control_thread_started_) return false;  // Already open
+        if (!path || path[0] == '\0') return false;
+        socket_path_ = path;
+        control_thread_started_ = true;
+        start_control_thread();
+        return true;
+    }
 
 private:
     TraceManager() : control_thread_started_(false), running_(false), server_fd_(-1) {
