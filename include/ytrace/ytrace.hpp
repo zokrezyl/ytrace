@@ -42,6 +42,9 @@
 // Control socket and config persistence (disable for Emscripten/WASM)
 #if !defined(YTRACE_NO_CONTROL_SOCKET)
     #ifdef _WIN32
+    #ifndef NOMINMAX
+    #define NOMINMAX
+    #endif
     #include <winsock2.h>
     #include <afunix.h>
     #include <process.h>
