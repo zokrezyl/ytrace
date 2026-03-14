@@ -556,7 +556,7 @@ private:
             return;
         }
 #endif
-        server_fd_ = socket(AF_UNIX, SOCK_STREAM, 0);
+        server_fd_ = ::socket(AF_UNIX, SOCK_STREAM, 0);
         if (server_fd_ < 0) {
             std::fprintf(stderr, "[ytrace] Failed to create socket\n");
             return;
@@ -570,7 +570,7 @@ private:
         addr.sun_family = AF_UNIX;
         std::strncpy(addr.sun_path, socket_path_.c_str(), sizeof(addr.sun_path) - 1);
 
-        if (bind(server_fd_, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
+        if (::bind(server_fd_, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
             std::fprintf(stderr, "[ytrace] Failed to bind socket: %s\n", socket_path_.c_str());
 #ifdef _WIN32
             closesocket(server_fd_);
@@ -581,7 +581,7 @@ private:
             return;
         }
 
-        if (listen(server_fd_, 5) < 0) {
+        if (::listen(server_fd_, 5) < 0) {
             std::fprintf(stderr, "[ytrace] Failed to listen on socket\n");
 #ifdef _WIN32
             closesocket(server_fd_);
@@ -613,7 +613,7 @@ private:
             int ret = select(server_fd_ + 1, &readfds, nullptr, nullptr, &tv);
             if (ret <= 0) continue;
 
-            int client_fd = static_cast<int>(accept(server_fd_, nullptr, nullptr));
+            int client_fd = static_cast<int>(::accept(server_fd_, nullptr, nullptr));
             if (client_fd < 0) continue;
 
             handle_client(client_fd);
