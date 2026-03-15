@@ -18,3 +18,6 @@ target_link_libraries(ytrace_complex PRIVATE ytrace::ytrace)
 
 add_executable(ytrace_timers timers.cpp)
 target_link_libraries(ytrace_timers PRIVATE ytrace::ytrace)
+
+add_executable(ytrace_test_points test_points.cpp)
+target_link_libraries(ytrace_test_points PRIVATE ytrace::ytrace)

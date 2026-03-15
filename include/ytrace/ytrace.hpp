@@ -850,6 +850,19 @@ namespace detail {
         }
         trace_handler()(level, file, line, function, buffer);
     }
+
+    template<typename... Args>
+    void test_trace_impl(const char* file, int line, const char* function, const char* ctx, uint64_t counter, const char* fmt, Args&&... args) {
+        char buffer[1024];
+        char msg_buffer[896];
+        if constexpr (sizeof...(args) == 0) {
+            std::snprintf(msg_buffer, sizeof(msg_buffer), "%s", fmt);
+        } else {
+            std::snprintf(msg_buffer, sizeof(msg_buffer), fmt, std::forward<Args>(args)...);
+        }
+        std::snprintf(buffer, sizeof(buffer), "[test:%s:%" PRIu64 "] %s", ctx, counter, msg_buffer);
+        trace_handler()("info", file, line, function, buffer);
+    }
 }
 
 // RAII scope tracer for function entry/exit
@@ -1016,6 +1029,10 @@ namespace ytrace {
 #ifndef YTRACE_ENABLE_YTIMEIT
 #define YTRACE_ENABLE_YTIMEIT 1
 #endif
+
+#ifndef YTRACE_ENABLE_YTEST
+#define YTRACE_ENABLE_YTEST 1
+#endif
 #else
 // YTRACE_ENABLED=0: disable all macros
 #define YTRACE_ENABLE_YLOG 0
@@ -1025,6 +1042,7 @@ namespace ytrace {
 #define YTRACE_ENABLE_YWARN 0
 #define YTRACE_ENABLE_YFUNC 0
 #define YTRACE_ENABLE_YTIMEIT 0
+#define YTRACE_ENABLE_YTEST 0
 #endif
 
 // Macros with compile-time format strings for spdlog
@@ -1155,6 +1173,33 @@ namespace ytrace {
 #define ytimeit(...) YTIMEIT_GET_MACRO(_0 __VA_OPT__(,) __VA_ARGS__, YTIMEIT_IMPL, YTIMEIT_NOLABEL)(__VA_ARGS__)
 #else
 #define ytimeit(...) do {} while(0)
+#endif
+
+// ytest() - test point macro with context name and static counter
+#if YTRACE_ENABLE_YTEST
+#if defined(YTRACE_USE_SPDLOG)
+#define ytest(ctx, fmt, ...) \
+    do { \
+        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, "test", ctx); \
+        static std::atomic<uint64_t> _ytrace_test_counter_{0}; \
+        if (_ytrace_enabled_) { \
+            auto _ytrace_count_ = ++_ytrace_test_counter_; \
+            spdlog::log(spdlog::source_loc{__FILE__, __LINE__, __func__}, spdlog::level::info, "[test:{}:{}] " fmt, ctx, _ytrace_count_ __VA_OPT__(,) __VA_ARGS__); \
+        } \
+    } while(0)
+#else
+#define ytest(ctx, fmt, ...) \
+    do { \
+        static bool _ytrace_enabled_ = ytrace::detail::register_trace_point(&_ytrace_enabled_, __FILE__, __LINE__, __func__, "test", ctx); \
+        static std::atomic<uint64_t> _ytrace_test_counter_{0}; \
+        if (_ytrace_enabled_) { \
+            auto _ytrace_count_ = ++_ytrace_test_counter_; \
+            ytrace::detail::test_trace_impl(__FILE__, __LINE__, __func__, ctx, _ytrace_count_, fmt __VA_OPT__(,) __VA_ARGS__); \
+        } \
+    } while(0)
+#endif
+#else
+#define ytest(ctx, fmt, ...) do {} while(0)
 #endif
 
 // Convenience macros for manager access
