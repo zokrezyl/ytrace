@@ -42,6 +42,7 @@ option(YTRACE_ENABLE_YINFO "Enable yinfo macro" ON)
 option(YTRACE_ENABLE_YWARN "Enable ywarn macro" ON)
 option(YTRACE_ENABLE_YERROR "Enable yerror macro" ON)
 option(YTRACE_ENABLE_YFUNC "Enable yfunc macro" ON)
+option(YTRACE_ENABLE_YTEST "Enable ytest macro" ON)
 
 # Apply compile definitions
 if(YTRACE_ENABLE_YLOG)
@@ -84,6 +85,12 @@ if(YTRACE_ENABLE_YFUNC)
     target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YFUNC=1)
 else()
     target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YFUNC=0)
+endif()
+
+if(YTRACE_ENABLE_YTEST)
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YTEST=1)
+else()
+    target_compile_definitions(ytrace INTERFACE YTRACE_ENABLE_YTEST=0)
 endif()
 
 # Optional: Try to pull in spdlog (skip if already available from parent)
